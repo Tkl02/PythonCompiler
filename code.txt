@@ -1,0 +1,4 @@
+peso = 45;
+altura = 175;
+
+mmc = altura / peso
