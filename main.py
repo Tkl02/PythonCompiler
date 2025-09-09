@@ -38,12 +38,12 @@ def main():
                 print("\n[Tokens gerados pele lexer]: \n")
                 all_tokens = get_all_tokens(text)
                 print(all_tokens)
-                print('\n --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+                print('\n'+('__'*40)+'\n')
             
             if print_tree:
                 print("\n[Fluxo da arvore sintatica abstrata]: \n")
                 print(ast)
-                print('\n---------------------------------------------------------------\n')
+                print('\n'+('__'*40)+'\n')
 
             if result is not None:
                 print(f" resultado: \n {result}")
