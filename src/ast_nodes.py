@@ -35,5 +35,25 @@ class CompoundNode:
         self.children = []
 
     def __repr__(self):
-        return f'COMPOUND {{\n' + ';\n'.join(map(repr, self.children)) + '\n}'
-        
+        return f'COMPOUND {{\n' + ';\n'.join(map(repr, self.children)) + '\n}}'
+
+# No para a classe de comparação 
+class IfNode:
+    def __init__(self, condition_node, then_block, else_block=None):
+        self.condition_node = condition_node
+        self.then_block = then_block
+        self.else_block = else_block
+
+    def __repr__(self):
+        result = f'IF ({self.condition_node}) THEN ({self.then_block})'
+        if self.else_block:
+            result += f' ELSE ({self.else_block})'
+        return result
+
+class UnaryOpNode:
+    def __init__(self, op_token, expr_node):
+        self.op_token = op_token
+        self.expr_node = expr_node
+
+    def __repr__(self):
+        return f'({self.op_token.type.name} {self.expr_node})'

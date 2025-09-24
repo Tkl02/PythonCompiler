@@ -19,6 +19,11 @@ class Parser:
     
     def factor(self):
         token = self.current_token
+        if token.type in (TokenType.PLUS, TokenType.MINUS):
+            self.eat(token.type)
+            # Chamada recursiva para analisar o que vem DEPOIS do sinal
+            node = UnaryOpNode(op_token=token, expr_node=self.factor())
+            return node
         if token.type == TokenType.INTEGER:
             self.eat(TokenType.INTEGER)
             return NumberNode(token)
@@ -31,6 +36,7 @@ class Parser:
             self.eat(TokenType.IDENTIFIER)
             return VarAccessNode(token)
         self.error("Fator inválido, esperado INTEGER, IDENTIFIER ou '('")
+        
 
     def term(self):
         node = self.factor()
@@ -41,13 +47,17 @@ class Parser:
         return node
     
     def expr(self):
-        if self.current_token.type == TokenType.IDENTIFIER and self.lexer.text[self.lexer.pos:].lstrip().startswith('='):
-             return self.assignment_statement()
         node = self.term()
+        while self.current_token.type in (TokenType.EQ, TokenType.NEQ, TokenType.LT, TokenType.GT, TokenType.LTE, TokenType.GTE):
+            operation_token = self.current_token
+            self.eat(operation_token.type)
+            node = BinaryOperationNode(left_node=node, operation_token=operation_token, right_node=self.term())
+        
         while self.current_token.type in (TokenType.PLUS, TokenType.MINUS):
             operation_token = self.current_token
-            self.eat(self.current_token.type)
+            self.eat(operation_token.type)
             node = BinaryOperationNode(left_node=node, operation_token=operation_token, right_node=self.term())
+
         return node  
     
     def assignment_statement(self):
@@ -57,8 +67,29 @@ class Parser:
         expr_node = self.expr()
         return VarAssignNode(var_token, expr_node)
     
+    def if_statement(self):
+        self.eat(TokenType.IF)
+        self.eat(TokenType.LPAREN)
+        condition = self.expr()
+        self.eat(TokenType.RPAREN)
+        
+        self.eat(TokenType.LBRACE)
+        then_block = self.compound_statement()
+        self.eat(TokenType.RBRACE)
+        
+        else_block = None
+        if self.current_token.type == TokenType.ELSE:
+            self.eat(TokenType.ELSE)
+            self.eat(TokenType.LBRACE)
+            else_block = self.compound_statement()
+            self.eat(TokenType.RBRACE)
+            
+        return IfNode(condition, then_block, else_block)
+            
     def statement(self):
-        if self.current_token.type == TokenType.IDENTIFIER and self.lexer.text[self.lexer.pos:].lstrip().startswith('='):
+        if self.current_token.type == TokenType.IF:
+            return self.if_statement()
+        elif self.current_token.type == TokenType.IDENTIFIER and self.lexer.peek() == '=':
             return self.assignment_statement()
         else:
             return self.expr()
@@ -68,8 +99,15 @@ class Parser:
         
         while self.current_token.type == TokenType.SEMICOLON:
             self.eat(TokenType.SEMICOLON)
+            
+            if self.current_token.type in (TokenType.RBRACE, TokenType.EOF):
+                break
+            
             nodes.append(self.statement())
         
+        if self.current_token.type == TokenType.IDENTIFIER:
+            nodes.append(self.statement())
+
         if len(nodes) == 1:
             return nodes[0]
             

@@ -1,4 +1,14 @@
-peso = 45;
-altura = 175;
+a = 10;
+b = 15;
 
-mmc = altura / peso
+resultado = 0;
+
+if (a > b) {
+  resultado = 100;
+  outro_valor = 50;
+} else {
+  resultado = -100;
+  outro_valor = 50;
+}
+
+resultado + outro_valor

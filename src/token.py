@@ -23,10 +23,23 @@ class TokenType(Enum):
     SEMICOLON = 'SEMICOLON'
     LPAREN    = 'LPAREN'
     RPAREN    = 'RPAREN'
-    
+    #|--
+    LBRACE = 'LBRACE'
+    RBRACE = 'RBRACE'
+
+
+    # Palavras Chaves
+    IF   = 'IF'
+    ELSE = 'ELSE'
+    EQ   = 'EQ'
+    NEQ  = 'NEQ'
+    LT   = 'LT'
+    GT   = 'GT'
+    LTE  = 'LTE'
+    GTE  = 'GTE'
+
     # fim de arquivo
     EOF = 'EOF'
-
 class Token:
     """
     Classe que representa um token.

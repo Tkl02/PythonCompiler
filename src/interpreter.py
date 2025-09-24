@@ -34,6 +34,13 @@ class Interpreter():
             if right_val == 0:
                 raise ZeroDivisionError("Erro em tempo de execução: Divisão por zero.")
             return left_val / right_val
+        
+        if operation == TokenType.EQ:  return 1.0 if left_val == right_val else 0.0
+        if operation == TokenType.NEQ: return 1.0 if left_val != right_val else 0.0
+        if operation == TokenType.LT:  return 1.0 if left_val < right_val else 0.0
+        if operation == TokenType.GT:  return 1.0 if left_val > right_val else 0.0
+        if operation == TokenType.LTE: return 1.0 if left_val <= right_val else 0.0
+        if operation == TokenType.GTE: return 1.0 if left_val >= right_val else 0.0
     
     def visit_VarAssignNode(self, node: VarAssignNode):
         var_name = node.var_name_token.value
@@ -53,6 +60,22 @@ class Interpreter():
         for child in node.children:
             last_result = self.visit(child)
         return last_result
+
+    def visit_IfNode(self, node: IfNode):
+        condition_value = self.visit(node.condition_node)
+        
+        if condition_value != 0:
+            return self.visit(node.then_block)
+        elif node.else_block is not None:
+            return self.visit(node.else_block)
+        
+    def visit_UnaryOpNode(self, node: UnaryOpNode):
+        number = self.visit(node.expr_node)
+
+        if node.op_token.type == TokenType.MINUS:
+            return -number
+        elif node.op_token.type == TokenType.PLUS:
+            return +number
     
     def interpret(self, tree):
         if tree is None: 
