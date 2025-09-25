@@ -28,29 +28,35 @@ class Interpreter:
         left = self.visit(node.left_node)
         right = self.visit(node.right_node)
         op_type = node.op_token.type
+        result = None
         error_msg = None
 
         if op_type == TokenType.PLUS:
             result, error_msg = left.__add__(right)
         elif op_type == TokenType.MINUS:
             result, error_msg = left.__sub__(right)
-        # Adicione aqui a lógica para MULTIPLY e DIVIDE dentro das classes de tipo
-        # e chame-as aqui, como __mul__ e __div__.
+        elif op_type == TokenType.MULTIPLY:
+            result, error_msg = left.__mul__(right)
+        elif op_type == TokenType.DIVIDE:
+            result, error_msg = left.__truediv__(right)
         
-        # Operadores de Comparação
+        # Operadores de Comparação (lógica continua aqui)
         elif op_type in (TokenType.EQ, TokenType.NEQ, TokenType.LT, TokenType.GT, TokenType.LTE, TokenType.GTE):
+            # Apenas números podem ser comparados com <, >, etc.
             if not isinstance(left, (Integer, Float)) or not isinstance(right, (Integer, Float)):
-                error_msg = "TypeError: Operadores de comparação só podem ser usados com números."
+                error_msg = "TypeError: Operadores de comparação (>, <, etc.) só podem ser usados com números."
             else:
+                # A comparação de igualdade (==, !=) pode funcionar para strings também
                 if op_type == TokenType.EQ:  result = Integer(1) if left.value == right.value else Integer(0)
-                if op_type == TokenType.NEQ: result = Integer(1) if left.value != right.value else Integer(0)
-                if op_type == TokenType.LT:  result = Integer(1) if left.value <  right.value else Integer(0)
-                if op_type == TokenType.GT:  result = Integer(1) if left.value >  right.value else Integer(0)
-                if op_type == TokenType.LTE: result = Integer(1) if left.value <= right.value else Integer(0)
-                if op_type == TokenType.GTE: result = Integer(1) if left.value >= right.value else Integer(0)
+                elif op_type == TokenType.NEQ: result = Integer(1) if left.value != right.value else Integer(0)
+                elif op_type == TokenType.LT:  result = Integer(1) if left.value <  right.value else Integer(0)
+                elif op_type == TokenType.GT:  result = Integer(1) if left.value >  right.value else Integer(0)
+                elif op_type == TokenType.LTE: result = Integer(1) if left.value <= right.value else Integer(0)
+                elif op_type == TokenType.GTE: result = Integer(1) if left.value >= right.value else Integer(0)
 
         if error_msg:
             raise Exception(f"Erro na linha {node.op_token.lineno}: {error_msg}")
+        
         return result
 
     def visit_UnaryOpNode(self, node: UnaryOpNode):

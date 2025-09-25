@@ -27,6 +27,16 @@ class Lexer:
         while self.current_char is not None and self.current_char.isspace():
             self.advance()
 
+    def skip_comment(self):
+        self.advance()
+        while self.current_char is not None and not (self.current_char =='#'):
+            self.advance()
+        if self.current_char is None:
+            self.error("Comentario em bloco não terminado. Faltando '#'.")
+        
+        self.advance()
+
+
     def peek(self):
         peek_pos = self.pos + 1
         if peek_pos < len(self.text):
@@ -71,15 +81,10 @@ class Lexer:
 
     def get_next_token(self) -> Token:
         while self.current_char is not None:
-            if self.current_char.isspace():
-                self.skip_whitespace()
-                continue
-            if self.current_char.isalpha() or self.current_char == '_':
-                return self._id()
-            if self.current_char.isdigit():
-                return self.number()
-            if self.current_char == '"':
-                return Token(TokenType.STRING, self.string(), self.lineno)
+            if self.current_char.isspace(): self.skip_whitespace(); continue
+            if self.current_char.isalpha() or self.current_char == '_': return self._id()
+            if self.current_char.isdigit(): return self.number()
+            if self.current_char == '"': return Token(TokenType.STRING, self.string(), self.lineno)
 
             # Operadores de dois caracteres primeiro
             if self.current_char == '=' and self.peek() == '=': self.advance(); self.advance(); return Token(TokenType.EQ, '==', self.lineno)
@@ -100,6 +105,11 @@ class Lexer:
             if self.current_char == ')': self.advance(); return Token(TokenType.RPAREN, ")", self.lineno)
             if self.current_char == '{': self.advance(); return Token(TokenType.LBRACE, '{', self.lineno)
             if self.current_char == '}': self.advance(); return Token(TokenType.RBRACE, '}', self.lineno)
+
+            # comentario
+            if self.current_char == '#':
+                self.skip_comment()
+                continue 
 
             self.error()
         
