@@ -1,14 +1,9 @@
-a = 10;
-b = 15;
+a_int = 10;
+b_float = 5.5;
 
-resultado = 0;
+c_result = a_int + b_float;
 
-if (a > b) {
-  resultado = 100;
-  outro_valor = 50;
-} else {
-  resultado = -100;
-  outro_valor = 50;
-}
+print("O resultado de inteiro + float é: ");
+print(c_result);
 
-resultado + outro_valor
+print("O valor de a é " + a_int);
