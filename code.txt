@@ -1,0 +1,47 @@
+print("--- 1. Testando Variáveis e Tipos ---");
+my_int = 100;
+my_float = 5.5;
+my_string = "Ola";
+my_bool = true;
+
+print("Inteiro: " + my_int);
+print("Float: " + my_float);
+print("String: " + my_string);
+print("Booleano: " + my_bool);
+
+print("--- 2. Testando Operações Aritméticas e de String ---");
+soma = my_int + my_float; #{ int + float resulta em float }#
+print("Soma (100 + 5.5): " + soma);
+
+repeat_string = "xo" * 4; #{ string * int resulta em repetição }#
+print("Repetição ('xo' * 4): " + repeat_string);
+
+divisao_result = (soma + 4.5) / 2; #{ (105.5 + 4.5) / 2 = 110.0 / 2 = 55.0 }#
+print("Resultado da divisão: " + divisao_result);
+
+print("--- 3. Testando Lógica e Controle de Fluxo ---");
+is_ready = true;
+has_permission = false;
+
+#{ Testa a precedência de 'not' e 'and' }#
+should_proceed = (my_int > 50) and (not has_permission); #{ (true) and (not false) -> true }#
+
+if (should_proceed) {
+    print("Acesso Permitido!");
+} else {
+    print("Acesso Negado!");
+}; #{ Ponto e vírgula obrigatório após o bloco }#
+
+final_check = should_proceed or has_permission; #{ true or false -> true }#
+print("Verificação final (true or false): " + final_check);
+
+print("--- 4. Testando Laço While ---");
+contador = 0;
+while (contador < 3) {
+  print("Contador: " + contador);
+  contador = contador + 1;
+};
+
+print("--- 5. Testes de Erro (comentados) ---");
+
+print("Fim do script de teste.");

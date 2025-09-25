@@ -5,6 +5,11 @@ KEYWORDS = {
     'else': TokenType.ELSE,
     'print': TokenType.PRINT,
     'while': TokenType.WHILE,
+    'true': TokenType.TRUE,
+    'false': TokenType.FALSE,
+    'and': TokenType.AND,
+    'or': TokenType.OR,
+    'not': TokenType.NOT,
 }
 
 class Lexer:
@@ -27,21 +32,21 @@ class Lexer:
         while self.current_char is not None and self.current_char.isspace():
             self.advance()
 
-    def skip_comment(self):
-        self.advance()
-        while self.current_char is not None and not (self.current_char =='#'):
-            self.advance()
-        if self.current_char is None:
-            self.error("Comentario em bloco não terminado. Faltando '#'.")
-        
-        self.advance()
-
-
     def peek(self):
         peek_pos = self.pos + 1
         if peek_pos < len(self.text):
             return self.text[peek_pos]
         return None
+
+    def skip_comment(self):
+        self.advance() # Pula o '#'
+        self.advance() # Pula o '{'
+        while self.current_char is not None and not (self.current_char == '}' and self.peek() == '#'):
+            self.advance()
+        if self.current_char is None:
+            self.error("Comentário em bloco não terminado. Faltando '}#'.")
+        self.advance() # Pula o '}'
+        self.advance() # Pula o '#'
 
     def string(self) -> str:
         result = ''
@@ -82,17 +87,16 @@ class Lexer:
     def get_next_token(self) -> Token:
         while self.current_char is not None:
             if self.current_char.isspace(): self.skip_whitespace(); continue
+            if self.current_char == '#' and self.peek() == '{': self.skip_comment(); continue
             if self.current_char.isalpha() or self.current_char == '_': return self._id()
             if self.current_char.isdigit(): return self.number()
             if self.current_char == '"': return Token(TokenType.STRING, self.string(), self.lineno)
 
-            # Operadores de dois caracteres primeiro
             if self.current_char == '=' and self.peek() == '=': self.advance(); self.advance(); return Token(TokenType.EQ, '==', self.lineno)
             if self.current_char == '!' and self.peek() == '=': self.advance(); self.advance(); return Token(TokenType.NEQ, '!=', self.lineno)
             if self.current_char == '<' and self.peek() == '=': self.advance(); self.advance(); return Token(TokenType.LTE, '<=', self.lineno)
             if self.current_char == '>' and self.peek() == '=': self.advance(); self.advance(); return Token(TokenType.GTE, '>=', self.lineno)
 
-            # Operadores e delimitadores de um caractere
             if self.current_char == '=': self.advance(); return Token(TokenType.ASSIGN, '=', self.lineno)
             if self.current_char == ';': self.advance(); return Token(TokenType.SEMICOLON, ';', self.lineno)
             if self.current_char == '+': self.advance(); return Token(TokenType.PLUS, "+", self.lineno)
@@ -105,11 +109,6 @@ class Lexer:
             if self.current_char == ')': self.advance(); return Token(TokenType.RPAREN, ")", self.lineno)
             if self.current_char == '{': self.advance(); return Token(TokenType.LBRACE, '{', self.lineno)
             if self.current_char == '}': self.advance(); return Token(TokenType.RBRACE, '}', self.lineno)
-
-            # comentario
-            if self.current_char == '#':
-                self.skip_comment()
-                continue 
 
             self.error()
         

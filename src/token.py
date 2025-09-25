@@ -37,6 +37,11 @@ class TokenType(Enum):
     ELSE  = 'ELSE'
     WHILE = 'WHILE'
     PRINT = 'PRINT'
+    TRUE  = 'TRUE'
+    FALSE = 'FALSE'
+    AND   = 'AND'
+    OR    = 'OR'
+    NOT   = 'NOT'
 
     # Fim de arquivo
     EOF = 'EOF'

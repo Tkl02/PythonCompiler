@@ -49,6 +49,7 @@ def main():
                 print(f" resultado: \n {result}")
         except Exception as error:
             print("erro na execução do codigo:",error)
+            #raise error
         
     except FileNotFoundError:
         print(f"Error -> arquivo {file} não encontrado")

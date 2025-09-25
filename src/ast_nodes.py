@@ -12,6 +12,13 @@ class StringNode:
     def __repr__(self):
         return f'"{self.value}"'
 
+class BooleanNode:
+    def __init__(self, token):
+        self.token = token
+        self.value = True if token.type.name == 'TRUE' else False
+    def __repr__(self):
+        return "true" if self.value else "false"
+
 class BinOpNode:
     def __init__(self, left_node, op_token, right_node):
         self.left_node = left_node
