@@ -17,8 +17,8 @@ def main():
     interpreter = Interpreter()
 
     file = 'code.txt'
-    print_tokens = True
-    print_tree = True
+    print_tokens = False
+    print_tree = False
 
     try:
         with open(file, 'r', encoding='utf-8') as file:
@@ -49,6 +49,7 @@ def main():
                 print(f" resultado: \n {result}")
         except Exception as error:
             print("erro na execução do codigo:",error)
+            #raise error
         
     except FileNotFoundError:
         print(f"Error -> arquivo {file} não encontrado")

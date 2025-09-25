@@ -1,11 +1,13 @@
 from .token import TokenType
 from .ast_nodes import *
+from .types import Integer, Float, String, Boolean
 
-class Interpreter():
+class Interpreter:
     def __init__(self):
         self.symbol_table = {}
 
     def visit(self, node):
+        if node is None: return None
         method_name = f'visit_{type(node).__name__}'
         visitor_method = getattr(self, method_name, self.generic_visit)
         return visitor_method(node)
@@ -14,27 +16,56 @@ class Interpreter():
         raise Exception(f'Nenhum método visit_{type(node).__name__} definido')
 
     def visit_NumberNode(self, node: NumberNode):
-        return float(node.value)
-    
-    def visit_BinaryOperationNode(self, node: BinaryOperationNode):
-        
-        left_val = self.visit(node.left_node)
-        right_val = self.visit(node.right_node)
+        if node.token.type == TokenType.INTEGER: return Integer(int(node.value))
+        elif node.token.type == TokenType.FLOAT: return Float(float(node.value))
 
-        operation = node.operation_token.type
+    def visit_StringNode(self, node: StringNode):
+        return String(node.value)
 
-        if operation == TokenType.PLUS:
-            return left_val + right_val
-        elif operation == TokenType.MINUS:
-            return left_val - right_val
-        elif operation == TokenType.MULTIPLY:
-            return left_val * right_val
-        elif operation == TokenType.DIVIDE:
-            # Tratamento de erro para divisão por zero
-            if right_val == 0:
-                raise ZeroDivisionError("Erro em tempo de execução: Divisão por zero.")
-            return left_val / right_val
+    def visit_BooleanNode(self, node: BooleanNode):
+        return Boolean(node.value)
+
+    def visit_UnaryOpNode(self, node: UnaryOpNode):
+        operand = self.visit(node.expr_node)
+        op_type = node.op_token.type
+        if op_type == TokenType.MINUS:
+            if isinstance(operand, (Integer, Float)): operand.value = -operand.value; return operand
+        elif op_type == TokenType.PLUS:
+            if isinstance(operand, (Integer, Float)): return operand
+        elif op_type == TokenType.NOT:
+            is_true = operand and operand.value; return Boolean(not is_true)
+        raise Exception(f"Erro na linha {node.op_token.lineno}: Operador unário '{op_type.name}' inválido para o tipo {type(operand).__name__}")
     
+    def visit_BinOpNode(self, node: BinOpNode):
+        left = self.visit(node.left_node)
+        right = self.visit(node.right_node)
+        op_type = node.op_token.type
+        result, error_msg = None, None
+
+        if op_type == TokenType.PLUS: result, error_msg = left.__add__(right)
+        elif op_type == TokenType.MINUS: result, error_msg = left.__sub__(right)
+        elif op_type == TokenType.MULTIPLY: result, error_msg = left.__mul__(right)
+        elif op_type == TokenType.DIVIDE: result, error_msg = left.__truediv__(right)
+        elif op_type == TokenType.AND:
+            if not isinstance(left, Boolean) or not isinstance(right, Boolean): error_msg = "TypeError: Operador 'and' só pode ser usado com booleanos."
+            else: result = Boolean(left.value and right.value)
+        elif op_type == TokenType.OR:
+            if not isinstance(left, Boolean) or not isinstance(right, Boolean): error_msg = "TypeError: Operador 'or' só pode ser usado com booleanos."
+            else: result = Boolean(left.value or right.value)
+        elif op_type in (TokenType.EQ, TokenType.NEQ):
+            result = Boolean(left.value == right.value if op_type == TokenType.EQ else left.value != right.value)
+        elif op_type in (TokenType.LT, TokenType.GT, TokenType.LTE, TokenType.GTE):
+            if type(left) != type(right) or not isinstance(left, (Integer, Float, String)):
+                error_msg = f"TypeError: Não é possível comparar {type(left).__name__} com {type(right).__name__}"
+            else:
+                if op_type == TokenType.LT:  result = Boolean(left.value <  right.value)
+                elif op_type == TokenType.GT:  result = Boolean(left.value >  right.value)
+                elif op_type == TokenType.LTE: result = Boolean(left.value <= right.value)
+                elif op_type == TokenType.GTE: result = Boolean(left.value >= right.value)
+
+        if error_msg: raise Exception(f"Erro na linha {node.op_token.lineno}: {error_msg}")
+        return result
+
     def visit_VarAssignNode(self, node: VarAssignNode):
         var_name = node.var_name_token.value
         value = self.visit(node.value_node)
@@ -45,16 +76,33 @@ class Interpreter():
         var_name = node.var_name_token.value
         value = self.symbol_table.get(var_name)
         if value is None:
-            raise NameError(f"Variável '{var_name}' não definida.")
+            raise NameError(f"Erro na linha {node.var_name_token.lineno}: Variável '{var_name}' não definida.")
         return value
         
     def visit_CompoundNode(self, node: CompoundNode):
         last_result = None
-        for child in node.children:
-            last_result = self.visit(child)
+        for child in node.children: last_result = self.visit(child)
         return last_result
+
+    def visit_IfNode(self, node: IfNode):
+        condition = self.visit(node.condition_node)
+        is_true = condition and hasattr(condition, 'value') and condition.value
+        if is_true: return self.visit(node.then_block)
+        elif node.else_block is not None: return self.visit(node.else_block)
+        return None
+        
+    def visit_WhileNode(self, node: WhileNode):
+        while True:
+            condition = self.visit(node.condition_node)
+            is_true = condition and hasattr(condition, 'value') and condition.value
+            if is_true: self.visit(node.body_node)
+            else: break
+        return None
+    
+    def visit_PrintNode(self, node: PrintNode):
+        value_to_print = self.visit(node.expr_node)
+        print(repr(value_to_print))
+        return None
     
     def interpret(self, tree):
-        if tree is None: 
-            return 0
         return self.visit(tree)
