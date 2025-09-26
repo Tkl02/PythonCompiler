@@ -118,16 +118,26 @@ class Parser:
         return WhileNode(condition, body)
 
     def if_statement(self):
-        self.eat(TokenType.IF); self.eat(TokenType.LPAREN)
+        self.eat(TokenType.IF)
+        self.eat(TokenType.LPAREN)
         condition = self.expr()
-        self.eat(TokenType.RPAREN); self.eat(TokenType.LBRACE)
+        self.eat(TokenType.RPAREN)
+        self.eat(TokenType.LBRACE)
         then_block = self.compound_statement()
         self.eat(TokenType.RBRACE)
+        
         else_block = None
+        
         if self.current_token.type == TokenType.ELSE:
-            self.eat(TokenType.ELSE); self.eat(TokenType.LBRACE)
-            else_block = self.compound_statement()
-            self.eat(TokenType.RBRACE)
+            self.eat(TokenType.ELSE)
+            
+            if self.current_token.type == TokenType.IF:
+                else_block = self.if_statement()
+            else:
+                self.eat(TokenType.LBRACE)
+                else_block = self.compound_statement()
+                self.eat(TokenType.RBRACE)
+        
         return IfNode(condition, then_block, else_block)
             
     def compound_statement(self):
