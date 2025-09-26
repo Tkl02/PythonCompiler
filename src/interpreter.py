@@ -3,8 +3,14 @@ from .ast_nodes import *
 from .types import Integer, Float, String, Boolean
 
 class Interpreter:
+    # Metodos de Inicialização
     def __init__(self):
         self.symbol_table = {}
+    
+    def interpret(self, tree):
+        return self.visit(tree)
+    
+    # Metodos de visitação
 
     def visit(self, node):
         if node is None: return None
@@ -15,26 +21,36 @@ class Interpreter:
     def generic_visit(self, node):
         raise Exception(f'Nenhum método visit_{type(node).__name__} definido')
 
-    def visit_NumberNode(self, node: NumberNode):
-        if node.token.type == TokenType.INTEGER: return Integer(int(node.value))
-        elif node.token.type == TokenType.FLOAT: return Float(float(node.value))
+    # Metodos de Visita aos nos
+    
+    # declaração
+    
+    def visit_CompoundNode(self, node: CompoundNode):
+        last_result = None
+        for child in node.children: last_result = self.visit(child)
+        return last_result
 
-    def visit_StringNode(self, node: StringNode):
-        return String(node.value)
+    def visit_IfNode(self, node: IfNode):
+        condition = self.visit(node.condition_node)
+        is_true = condition and hasattr(condition, 'value') and condition.value
+        if is_true: return self.visit(node.then_block)
+        elif node.else_block is not None: return self.visit(node.else_block)
+        return None
 
-    def visit_BooleanNode(self, node: BooleanNode):
-        return Boolean(node.value)
+    def visit_WhileNode(self, node: WhileNode):
+        while True:
+            condition = self.visit(node.condition_node)
+            is_true = condition and hasattr(condition, 'value') and condition.value
+            if is_true: self.visit(node.body_node)
+            else: break
+        return None
 
-    def visit_UnaryOpNode(self, node: UnaryOpNode):
-        operand = self.visit(node.expr_node)
-        op_type = node.op_token.type
-        if op_type == TokenType.MINUS:
-            if isinstance(operand, (Integer, Float)): operand.value = -operand.value; return operand
-        elif op_type == TokenType.PLUS:
-            if isinstance(operand, (Integer, Float)): return operand
-        elif op_type == TokenType.NOT:
-            is_true = operand and operand.value; return Boolean(not is_true)
-        raise Exception(f"Erro na linha {node.op_token.lineno}: Operador unário '{op_type.name}' inválido para o tipo {type(operand).__name__}")
+    def visit_PrintNode(self, node: PrintNode):
+        value_to_print = self.visit(node.expr_node)
+        print(repr(value_to_print))
+        return None
+    
+    # expressões
     
     def visit_BinOpNode(self, node: BinOpNode):
         left = self.visit(node.left_node)
@@ -65,6 +81,27 @@ class Interpreter:
 
         if error_msg: raise Exception(f"Erro na linha {node.op_token.lineno}: {error_msg}")
         return result
+    
+    def visit_UnaryOpNode(self, node: UnaryOpNode):
+        operand = self.visit(node.expr_node)
+        op_type = node.op_token.type
+        if op_type == TokenType.MINUS:
+            if isinstance(operand, (Integer, Float)): operand.value = -operand.value; return operand
+        elif op_type == TokenType.PLUS:
+            if isinstance(operand, (Integer, Float)): return operand
+        elif op_type == TokenType.NOT:
+            is_true = operand and operand.value; return Boolean(not is_true)
+        raise Exception(f"Erro na linha {node.op_token.lineno}: Operador unário '{op_type.name}' inválido para o tipo {type(operand).__name__}")
+    
+    def visit_NumberNode(self, node: NumberNode):
+        if node.token.type == TokenType.INTEGER: return Integer(int(node.value))
+        elif node.token.type == TokenType.FLOAT: return Float(float(node.value))
+    
+    def visit_StringNode(self, node: StringNode):
+        return String(node.value)
+
+    def visit_BooleanNode(self, node: BooleanNode):
+        return Boolean(node.value)
 
     def visit_VarAssignNode(self, node: VarAssignNode):
         var_name = node.var_name_token.value
@@ -78,31 +115,3 @@ class Interpreter:
         if value is None:
             raise NameError(f"Erro na linha {node.var_name_token.lineno}: Variável '{var_name}' não definida.")
         return value
-        
-    def visit_CompoundNode(self, node: CompoundNode):
-        last_result = None
-        for child in node.children: last_result = self.visit(child)
-        return last_result
-
-    def visit_IfNode(self, node: IfNode):
-        condition = self.visit(node.condition_node)
-        is_true = condition and hasattr(condition, 'value') and condition.value
-        if is_true: return self.visit(node.then_block)
-        elif node.else_block is not None: return self.visit(node.else_block)
-        return None
-        
-    def visit_WhileNode(self, node: WhileNode):
-        while True:
-            condition = self.visit(node.condition_node)
-            is_true = condition and hasattr(condition, 'value') and condition.value
-            if is_true: self.visit(node.body_node)
-            else: break
-        return None
-    
-    def visit_PrintNode(self, node: PrintNode):
-        value_to_print = self.visit(node.expr_node)
-        print(repr(value_to_print))
-        return None
-    
-    def interpret(self, tree):
-        return self.visit(tree)

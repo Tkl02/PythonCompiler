@@ -25,7 +25,7 @@ def main():
             text = file.read()
 
         if not text.strip():
-            print(f" Arquivo '{file}' esta vazio.")
+            print(f" Arquivo '{file.name}' esta vazio.")
             return
         
         try:
