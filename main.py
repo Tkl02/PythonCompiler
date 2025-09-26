@@ -45,8 +45,7 @@ def main():
                 print(ast)
                 print('\n'+('__'*40)+'\n')
 
-            if result is not None:
-                print(f" resultado: \n {result}")
+            
         except Exception as error:
             print("erro na execução do codigo:",error)
             #raise error
