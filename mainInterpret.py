@@ -1,7 +1,7 @@
-from src.lexer import Lexer
-from src.parser import Parser
-from src.interpreter import Interpreter
-from src.token import TokenType
+from Interpreter.lexer import Lexer
+from Interpreter.parser import Parser
+from Interpreter.interpreter import Interpreter
+from Interpreter.token import TokenType
 
 def get_all_tokens(text):
     lexer_debug = Lexer(text)

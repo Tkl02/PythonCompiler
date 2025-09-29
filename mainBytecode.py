@@ -1,8 +1,7 @@
-# mainBytecode.py
-from src.lexer import Lexer
-from src.parser import Parser
-from app.compiler import Compiler
-from app.disasembler import disassemble_chunk
+from Interpreter.lexer import Lexer
+from Interpreter.parser import Parser
+from Compiler.compiler import Compiler
+from Compiler.disasembler import disassemble_chunk
 import sys
 
 def main():
