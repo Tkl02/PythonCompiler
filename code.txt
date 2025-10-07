@@ -1,9 +1,9 @@
-i = 0;
-while (i < 3) {
-    if (i == 1) {
-        print("É um!");
-    } else {
-        print("Não é um.");
-    };
-    i = i + 1;
+nota = 60;
+
+if (nota <= 30) {
+  print("Reprovado");
+} else if( nota >= 31 and nota <= 59){
+    print("Recuperação");
+} else{
+    print("Aprovado");
 };

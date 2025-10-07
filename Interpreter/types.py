@@ -9,44 +9,74 @@ class Integer(Value):
     """Classe para representar um valor inteiro."""
     def __add__(self, other):
         if isinstance(other, Integer): return Integer(self.value + other.value), None
-        if isinstance(other, Float): return Float(float(self.value) + other.value), None
+        if isinstance(other, Float):
+            result = float(self.value) + other.value
+            if result % 1 == 0:
+                return Integer(int(result)), None
+            return Float(result), None
         return None, f"TypeError: Operador '+' inválido entre Inteiro e {type(other).__name__}"
 
     def __sub__(self, other):
         if isinstance(other, Integer): return Integer(self.value - other.value), None
-        if isinstance(other, Float): return Float(float(self.value) - other.value), None
+        if isinstance(other, Float):
+            result = float(self.value) - other.value
+            if result % 1 == 0:
+                return Integer(int(result)), None
+            return Float(result), None
         return None, f"TypeError: Operador '-' inválido entre Inteiro e {type(other).__name__}"
 
     def __mul__(self, other):
         if isinstance(other, Integer): return Integer(self.value * other.value), None
-        if isinstance(other, Float): return Float(float(self.value) * other.value), None
+        if isinstance(other, Float):
+            result = float(self.value) * other.value
+            if result % 1 == 0:
+                return Integer(int(result)), None
+            return Float(result), None
         if isinstance(other, String): return String(other.value * self.value), None
         return None, f"TypeError: Operador '*' inválido entre Inteiro e {type(other).__name__}"
 
     def __truediv__(self, other):
         if isinstance(other, (Integer, Float)):
             if other.value == 0: return None, "ZeroDivisionError: Divisão por zero"
-            return Float(float(self.value) / float(other.value)), None
+            result = float(self.value) / float(other.value)
+            if result % 1 == 0:
+                return Integer(int(result)), None
+            return Float(result), None
         return None, f"TypeError: Operador '/' inválido entre Inteiro e {type(other).__name__}"
 
 class Float(Value):
     """Classe para representar um valor de ponto flutuante."""
     def __add__(self, other):
-        if isinstance(other, (Integer, Float)): return Float(self.value + float(other.value)), None
+        if isinstance(other, (Integer, Float)):
+            result = self.value + float(other.value)
+            if result % 1 == 0:
+                return Integer(int(result)), None
+            return Float(result), None
         return None, f"TypeError: Operador '+' inválido entre Float e {type(other).__name__}"
 
     def __sub__(self, other):
-        if isinstance(other, (Integer, Float)): return Float(self.value - float(other.value)), None
+        if isinstance(other, (Integer, Float)):
+            result = self.value - float(other.value)
+            if result % 1 == 0:
+                return Integer(int(result)), None
+            return Float(result), None
         return None, f"TypeError: Operador '-' inválido entre Float e {type(other).__name__}"
 
     def __mul__(self, other):
-        if isinstance(other, (Integer, Float)): return Float(self.value * float(other.value)), None
+        if isinstance(other, (Integer, Float)):
+            result = self.value * float(other.value)
+            if result % 1 == 0:
+                return Integer(int(result)), None
+            return Float(result), None
         return None, f"TypeError: Operador '*' inválido entre Float e {type(other).__name__}"
 
     def __truediv__(self, other):
         if isinstance(other, (Integer, Float)):
             if other.value == 0: return None, "ZeroDivisionError: Divisão por zero"
-            return Float(self.value / float(other.value)), None
+            result = self.value / float(other.value)
+            if result % 1 == 0:
+                return Integer(int(result)), None
+            return Float(result), None
         return None, f"TypeError: Operador '/' inválido entre Float e {type(other).__name__}"
 
 class String(Value):
