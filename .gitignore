@@ -1,0 +1,10 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Diretórios específicos de cache
+Interpreter/__pycache__/
+Compiler/__pycache__/
