@@ -47,10 +47,6 @@ class TokenType(Enum):
     EOF = 'EOF'
 
 class Token:
-    """
-    Classe que representa um token.
-    Contém um tipo, um valor opcional e o número da linha.
-    """
     def __init__(self, type: TokenType, value: any = None, lineno: int = 0):
         self.type = type
         self.value = value

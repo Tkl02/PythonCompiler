@@ -2,11 +2,60 @@
 
 Bem-vindo à documentação oficial desta linguagem de programação customizada, construída do zero em Python. Este documento detalha a sintaxe, as funcionalidades e o uso da linguagem.
 
-## 1. Funcionalidades
+## 1. Como Executar o Projeto
+
+Para executar programas escritos nesta linguagem, siga os passos abaixo:
+
+### 1.1. Preparação do Código
+
+1. Escreva ou copie seu código no arquivo `code.txt` localizado na raiz do projeto.
+2. Certifique-se de seguir a sintaxe correta da linguagem (detalhada nas seções seguintes).
+
+### 1.2. Executando o Interpretador
+
+Para executar seu código usando o **interpretador** (modo de execução direta):
+
+```bash
+python ./mainInterpret.py
+```
+
+O interpretador irá ler o arquivo `code.txt`, analisar e executar o código imediatamente, mostrando os resultados no console.
+
+### 1.3. Compilando para Bytecode
+
+Para compilar seu código em **bytecode** (formato intermediário):
+
+```bash
+python ./mainBytecode.py
+```
+
+Este comando irá ler o `code.txt`, compilar o código e gerar bytecode, que pode ser executado posteriormente pela máquina virtual da linguagem.
+
+### 1.4. Exemplo Rápido
+
+1. Crie ou edite o arquivo `code.txt`:
+```
+print("Olá, Mundo!");
+x = 10 + 5;
+print("O resultado é: " + x);
+```
+
+2. Execute o interpretador:
+```bash
+python ./mainInterpret.py
+```
+
+3. Você verá a saída:
+```
+Olá, Mundo!
+O resultado é: 15
+```
+
+## 2. Funcionalidades
 
 A linguagem suporta uma variedade de construções de programação fundamentais.
 
-### 1.1. Tipos de Dados
+### 2.1. Tipos de Dados
 
 A linguagem suporta quatro tipos de dados primitivos:
 
@@ -26,7 +75,7 @@ A linguagem suporta quatro tipos de dados primitivos:
 }#
 ```
 
-### 1.2. Variáveis
+### 2.2. Variáveis
 
 Variáveis são usadas para armazenar dados. Elas são declaradas e atribuídas a um valor usando o operador `=`. Todas as declarações devem terminar com um ponto e vírgula `;`.
 
@@ -38,7 +87,7 @@ mensagem = "Esta é uma mensagem";
 esta_ativo = false;
 ```
 
-### 1.3. Operadores
+### 2.3. Operadores
 
 #### Operadores Aritméticos
 
@@ -83,7 +132,7 @@ if (idade >= 18 and habilitado == true) {
 };
 ```
 
-### 1.4. Estruturas de Controle
+### 2.4. Estruturas de Controle
 
 #### `if-else`
 
@@ -92,12 +141,14 @@ Executa um bloco de código se uma condição for verdadeira e, opcionalmente, o
 **Exemplo de implementação:**
 
 ```
-nota = 75;
+nota = 60;
 
-if (nota >= 60) {
-  print("Aprovado");
-} else {
+if (nota <= 30) {
   print("Reprovado");
+} else if( nota >= 31 and nota <= 59){
+    print("Recuperação");
+} else{
+    print("Aprovado");
 };
 ```
 
@@ -115,7 +166,7 @@ while (contador < 5) {
 };
 ```
 
-### 1.5. Funções Nativas
+### 2.5. Funções Nativas
 
 #### `print()`
 
@@ -128,7 +179,7 @@ nome = "Mundo";
 print("Olá, " + nome + "!"); # Saída: Olá, Mundo!
 ```
 
-### 1.6. Comentários
+### 2.6. Comentários
 
 Comentários de bloco são usados para adicionar notas ao código que o interpretador irá ignorar. Eles começam com `#{` e terminam com `}#`.
 
@@ -144,7 +195,7 @@ Comentários de bloco são usados para adicionar notas ao código que o interpre
 print("Isso será executado");
 ```
 
-## 2. Exemplo Completo
+## 3. Exemplo Completo
 
 Aqui está um exemplo que combina várias funcionalidades da linguagem:
 
@@ -171,7 +222,7 @@ if (soma > 50) {
 };
 ```
 
-## 3. Testes
+## 4. Exemplos de Testes
 
 Teste 1: Validação de tipos e operações básicas.
 

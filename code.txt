@@ -1,0 +1,9 @@
+nota = 60;
+
+if (nota <= 30) {
+  print("Reprovado");
+} else if( nota >= 31 and nota <= 59){
+    print("Recuperação");
+} else{
+    print("Aprovado");
+};
