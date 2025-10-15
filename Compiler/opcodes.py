@@ -2,10 +2,6 @@
 from enum import IntEnum, auto
 
 class OpCode(IntEnum):
-    """
-    Define todos os códigos de operação (opcodes) com nomes intuitivos 
-    para a nossa Máquina Virtual baseada em pilha.
-    """
     
     # --- Pilha e Constantes ---
     OP_LOAD_CONST = auto()      # Argumento: index da constante. Empurra constants[index] na pilha.
@@ -32,6 +28,8 @@ class OpCode(IntEnum):
     OP_NOT_EQUAL = auto()       # !=
     OP_GREATER = auto()         # >
     OP_LESS = auto()            # <
+    OP_GREATER_EQUAL = auto()   #>=
+    OP_LESS_EQUAL = auto()      #<=
 
     # --- Operadores Lógicos/Unários (retiram um valor da pilha, empurram um) ---
     OP_NEGATE = auto()          # - (negação numérica)

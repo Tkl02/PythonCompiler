@@ -6,6 +6,7 @@ from Interpreter.token import TokenType
 class Compiler:
     def __init__(self):
         self.chunk = Chunk()
+        self.loop_contexts: list[list[int]] = [] 
 
     def compile(self, node):
         if node is None: return None
@@ -73,6 +74,8 @@ class Compiler:
         elif op_type == TokenType.NEQ:      self.emit_byte(OpCode.OP_NOT_EQUAL, line)
         elif op_type == TokenType.GT:       self.emit_byte(OpCode.OP_GREATER, line)
         elif op_type == TokenType.LT:       self.emit_byte(OpCode.OP_LESS, line)
+        elif op_type == TokenType.GTE:       self.emit_byte(OpCode.OP_GREATER_EQUAL, line)
+        elif op_type == TokenType.LTE:       self.emit_byte(OpCode.OP_LESS_EQUAL, line)
 
     def visit_VarAssignNode(self, node: ast.VarAssignNode):
         self.visit(node.value_node)
@@ -103,6 +106,9 @@ class Compiler:
         self.patch_jump(else_jump)
 
     def visit_WhileNode(self, node: ast.WhileNode):
+        
+        self.loop_contexts.append([])
+
         loop_start = len(self.chunk.code)
         self.visit(node.condition_node)
         line = node.condition_node.op_token.lineno if hasattr(node.condition_node, 'op_token') else -1
@@ -111,3 +117,14 @@ class Compiler:
         jump_offset = len(self.chunk.code) - loop_start + 1
         self.chunk.write(OpCode.OP_JUMP_BACKWARD, jump_offset, line)
         self.patch_jump(exit_jump)
+
+        break_to_patch = self.loop_contexts.pop()
+        for break_jump in break_to_patch:
+            self.patch_jump(break_jump)
+    
+    def visit_BreakNode(self, node: ast.BreakNode):
+        if not self.loop_contexts:
+            raise Exception(f"Erro na linha {node.token.lineno}: 'Break' so pode ser usado dentro de um laço")
+
+        jump = self.emit_jump(OpCode.OP_JUMP_FORWARD, node.token.lineno)
+        self.loop_contexts[-1].append(jump)

@@ -1,9 +1,11 @@
-nota = 60;
-
-if (nota <= 30) {
-  print("Reprovado");
-} else if( nota >= 31 and nota <= 59){
-    print("Recuperação");
-} else{
-    print("Aprovado");
+i = 0;
+while (i < 10) {
+    if (i == 3) {
+        print("Encontrei o 3, saindo do laço...");
+        break;
+    };
+    print("O valor de i é: " + i);
+    i = i + 1;
 };
+
+print("Laço finalizado. O valor final de i é: " + i);

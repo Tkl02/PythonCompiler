@@ -44,7 +44,8 @@ def disassemble_instruction(chunk: Chunk, offset: int) -> int:
         OpCode.OP_RETURN, OpCode.OP_POP, OpCode.OP_LOAD_TRUE, OpCode.OP_LOAD_FALSE,
         OpCode.OP_LOAD_NIL, OpCode.OP_ADD, OpCode.OP_SUBTRACT, OpCode.OP_MULTIPLY,
         OpCode.OP_DIVIDE, OpCode.OP_EQUAL, OpCode.OP_NOT_EQUAL, OpCode.OP_GREATER,
-        OpCode.OP_LESS, OpCode.OP_NEGATE, OpCode.OP_NOT, OpCode.OP_CALL_PRINT
+        OpCode.OP_LESS, OpCode.OP_NEGATE, OpCode.OP_NOT, OpCode.OP_CALL_PRINT,
+        OpCode.OP_GREATER_EQUAL ,OpCode.OP_LESS_EQUAL
     ]:
         simple_instruction(opcode.name, offset)
         return offset + 1

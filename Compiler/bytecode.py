@@ -8,10 +8,6 @@ ByteCode = Tuple[OpCode, int]
 
 @dataclass
 class Chunk:
-    """
-    Um "Chunk" agrupa o bytecode e os dados associados, como a piscina de 
-    constantes e o mapeamento de linhas de código.
-    """
     code: List[ByteCode] = field(default_factory=list) # O código de maquina
     constants: List[any] = field(default_factory=list) # Piscina de constantes (numeros, strings)
     lines: List[int] = field(default_factory=list)     # Mapeamento de bytecode para linha de código

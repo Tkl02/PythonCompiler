@@ -1,7 +1,6 @@
 from enum import Enum
 
 class TokenType(Enum):
-    """Enumeração para todos os tipos de tokens da linguagem."""
     # Literais
     INTEGER = 'INTEGER'
     FLOAT   = 'FLOAT'
@@ -42,6 +41,7 @@ class TokenType(Enum):
     AND   = 'AND'
     OR    = 'OR'
     NOT   = 'NOT'
+    BREAK = 'BREAK'
 
     # Fim de arquivo
     EOF = 'EOF'
@@ -53,7 +53,7 @@ class Token:
         self.lineno = lineno
     
     def __str__(self):
-        return f'Token({self.type.name}, {repr(self.value)}, linha {self.lineno})'
+        return f'Token \n ({self.type.name}, {repr(self.value)}, linha {self.lineno})'
     
     def __repr__(self):
         return self.__str__()
