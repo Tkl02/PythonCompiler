@@ -412,33 +412,8 @@ Projeto educacional de código aberto.
 - **Tratamento de erros**: Recuperação com sincronização
 
 ---
-
-## 🗺️ Roadmap de Aprendizado
-
-### Nível 1: Básico
-- [ ] Executar primeiro programa
-- [ ] Usar variáveis
-- [ ] Fazer cálculos simples
-- [ ] Usar print()
-
-### Nível 2: Intermediário
-- [ ] Usar if-else
-- [ ] Criar loops while
-- [ ] Trabalhar com strings
-- [ ] Combinar operadores
-
-### Nível 3: Avançado
-- [ ] Implementar algoritmos clássicos
-- [ ] Criar programas completos
-- [ ] Depurar erros complexos
-- [ ] Otimizar código
-
-### Nível 4: Expert
-- [ ] Entender arquitetura do compilador
-- [ ] Ler e interpretar bytecode
-- [ ] Modificar a linguagem
-- [ ] Contribuir com melhorias
-
----
+visitor
+Composite -> nos da ast
+strategy -> __add__ __sub__ ...
 
 **Boa programação! 🚀**

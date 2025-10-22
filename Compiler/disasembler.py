@@ -1,4 +1,3 @@
-# app/disassembler.py
 from .bytecode import Chunk
 from .opcodes import OpCode
 

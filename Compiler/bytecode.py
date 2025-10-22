@@ -1,4 +1,3 @@
-# app/bytecode.py
 from dataclasses import dataclass, field
 from typing import List, Tuple
 from .opcodes import OpCode

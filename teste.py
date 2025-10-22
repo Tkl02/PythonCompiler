@@ -1,2 +1,1 @@
-while(True):
-    print("a")
+print(2.0+3.0)

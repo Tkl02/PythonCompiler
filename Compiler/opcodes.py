@@ -1,4 +1,3 @@
-# app/opcodes.py
 from enum import IntEnum, auto
 
 class OpCode(IntEnum):
