@@ -6,13 +6,13 @@ Bem-vindo à documentação completa desta linguagem de programação customizad
 
 ### Para Iniciantes
 
-1. **[Introdução](Docs/01-Introducao.md)**
+1. **[Introdução](01-Introducao.md)**
    - Visão geral da linguagem
    - Arquitetura do projeto (Interpretador vs Compilador)
    - Como executar programas
    - Estrutura básica de um programa
 
-2. **[Tipos de Dados](Docs/02-Tipos-de-Dados.md)**
+2. **[Tipos de Dados](02-Tipos-de-Dados.md)**
    - Integer (Inteiros)
    - Float (Ponto Flutuante)
    - String (Cadeias de Caracteres)
@@ -20,7 +20,7 @@ Bem-vindo à documentação completa desta linguagem de programação customizad
    - Conversões automáticas
    - Operações por tipo
 
-3. **[Operadores](Docs/03-Operadores.md)**
+3. **[Operadores](03-Operadores.md)**
    - Aritméticos: `+`, `-`, `*`, `/`
    - Comparação: `==`, `!=`, `<`, `>`, `<=`, `>=`
    - Lógicos: `and`, `or`, `not`
@@ -28,21 +28,21 @@ Bem-vindo à documentação completa desta linguagem de programação customizad
    - Precedência de operadores
    - Exemplos práticos
 
-4. **[Estruturas de Controle](Docs/04-Estruturas-de-Controle.md)**
+4. **[Estruturas de Controle](04-Estruturas-de-Controle.md)**
    - Condicionais: `if`, `else`, `else if`
    - Laços: `while`
    - Comando `break`
    - Exemplos completos
    - Boas práticas
 
-5. **[Variáveis](Docs/05-Variaveis.md)**
+5. **[Variáveis](05-Variaveis.md)**
    - Declaração e atribuição
    - Regras de nomenclatura
    - Escopo (global)
    - Operações com variáveis
    - Flags e variáveis temporárias
 
-6. **[Exemplos Práticos](Docs/06-Exemplos-Praticos.md)**
+6. **[Exemplos Práticos](06-Exemplos-Praticos.md)**
    - 13 programas completos comentados
    - Calculadoras e conversores
    - Algoritmos clássicos (Fibonacci, Fatorial, Primo)
@@ -50,7 +50,7 @@ Bem-vindo à documentação completa desta linguagem de programação customizad
 
 ### Para Desenvolvedores
 
-7. **[Arquitetura do Compilador](Docs/07-Arquitetura-Compilador.md)**
+7. **[Arquitetura do Compilador](07-Arquitetura-Compilador.md)**
    - Análise Léxica (Lexer)
    - Análise Sintática (Parser)
    - AST (Árvore Sintática Abstrata)
@@ -59,14 +59,14 @@ Bem-vindo à documentação completa desta linguagem de programação customizad
    - Sistema de tipos
    - Tratamento de erros
 
-8. **[Referência de Bytecode](Docs/08-Referencia-Bytecode.md)**
+8. **[Referência de Bytecode](08-Referencia-Bytecode.md)**
    - Modelo de pilha
    - Todos os opcodes detalhados
    - Exemplos de compilação
    - Tabela de referência rápida
    - Notas técnicas
 
-9. **[Tratamento de Erros e Depuração](Docs/09-Tratamento-Erros.md)**
+9. **[Tratamento de Erros e Depuração](09-Tratamento-Erros.md)**
    - Erros léxicos, sintáticos e semânticos
    - Mensagens de erro detalhadas
    - Recuperação de erros
@@ -74,13 +74,13 @@ Bem-vindo à documentação completa desta linguagem de programação customizad
    - Boas práticas
    - Checklist de depuração
 
-10. **[Referência Rápida (Cheat Sheet)](Docs/10-Referencia-Rapida.md)**
+10. **[Referência Rápida (Cheat Sheet)](10-Referencia-Rapida.md)**
     - Sintaxe básica condensada
     - Tabelas de operadores e tipos
     - Padrões e algoritmos comuns
     - Guia de consulta rápida
 
-11. **[Guia de Extensão e Melhorias](Docs/11-Guia-Extensao.md)**
+11. **[Guia de Extensão e Melhorias](11-Guia-Extensao.md)**
     - Sugestões de novas features
     - Roadmap de implementação
     - Guia passo a passo
@@ -141,18 +141,18 @@ while (contador <= 5) {
 
 ### Para Aprender a Programar na Linguagem
 
-1. Comece com [Introdução](Docs/01-Introducao.md)
-2. Aprenda sobre [Tipos de Dados](Docs/02-Tipos-de-Dados.md)
-3. Domine os [Operadores](Docs/03-Operadores.md)
-4. Estude [Estruturas de Controle](Docs/04-Estruturas-de-Controle.md)
-5. Pratique com [Variáveis](Docs/05-Variaveis.md)
-6. Implemente os [Exemplos Práticos](Docs/06-Exemplos-Praticos.md)
-7. Consulte [Tratamento de Erros](Docs/09-Tratamento-Erros.md) quando necessário
+1. Comece com [Introdução](01-Introducao.md)
+2. Aprenda sobre [Tipos de Dados](02-Tipos-de-Dados.md)
+3. Domine os [Operadores](03-Operadores.md)
+4. Estude [Estruturas de Controle](04-Estruturas-de-Controle.md)
+5. Pratique com [Variáveis](05-Variaveis.md)
+6. Implemente os [Exemplos Práticos](06-Exemplos-Praticos.md)
+7. Consulte [Tratamento de Erros](09-Tratamento-Erros.md) quando necessário
 
 ### Para Entender a Implementação
 
-1. Comece com [Arquitetura do Compilador](Docs/7-Arquitetura-Compilador.md)
-2. Estude a [Referência de Bytecode](Docs/08-Referencia-Bytecode.md)
+1. Comece com [Arquitetura do Compilador](07-Arquitetura-Compilador.md)
+2. Estude a [Referência de Bytecode](08-Referencia-Bytecode.md)
 3. Explore os códigos fonte comentados
 4. Experimente modificar a linguagem
 
@@ -387,10 +387,10 @@ Este projeto é educacional. Sugestões de melhorias:
 
 Ao encontrar problemas:
 
-1. Verifique a [documentação de erros](Docs/09-Tratamento-Erros.md)
+1. Verifique a [documentação de erros](09-Tratamento-Erros.md)
 2. Use as ferramentas de depuração
-3. Consulte os [exemplos práticos](Docs/06-Exemplos-Praticos.md)
-4. Revise a [arquitetura](Docs/07-Arquitetura-Compilador.md)
+3. Consulte os [exemplos práticos](06-Exemplos-Praticos.md)
+4. Revise a [arquitetura](07-Arquitetura-Compilador.md)
 
 ---
 

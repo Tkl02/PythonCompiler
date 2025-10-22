@@ -1,11 +1,34 @@
-i = 0;
-while (i < 10) {
-    if (i == 3) {
-        print("Encontrei o 3, saindo do laço...");
-        break;
-    };
-    print("O valor de i é: " + i);
-    i = i + 1;
+#{ ===================================
+   Programa: Calculadora de Média
+   Descrição: Calcula média de 4 notas
+              e determina aprovação
+   =================================== }#
+
+print("=== CALCULADORA DE MÉDIA ===");
+
+#{ Definição das notas }#
+nota1 = 8.5;
+nota2 = 7.0;
+nota3 = 9.0;
+nota4 = 6.5;
+
+#{ Cálculo da média }#
+soma = nota1 + nota2 + nota3 + nota4;
+media = soma / 4;
+
+print("Nota 1: " + nota1);
+print("Nota 2: " + nota2);
+print("Nota 3: " + nota3);
+print("Nota 4: " + nota4);
+print("Média: " + media);
+
+#{ Determinação do status }#
+if (media >= 7.0) {
+    print("Status: APROVADO");
+} else if (media >= 5.0) {
+    print("Status: RECUPERAÇÃO");
+} else {
+    print("Status: REPROVADO");
 };
 
-print("Laço finalizado. O valor final de i é: " + i);
+print("=== FIM ===");
