@@ -33,6 +33,8 @@ class OpCode(IntEnum):
     # --- Operadores Lógicos/Unários (retiram um valor da pilha, empurram um) ---
     OP_NEGATE = auto()          # - (negação numérica)
     OP_NOT = auto()             # not (negação lógica)
+    OP_AND = auto()             # and (operador lógico E)
+    OP_OR = auto()              # or (operador lógico OU)
 
     # --- Controle de Fluxo ---
     OP_JUMP_IF_FALSE = auto()   # Argumento: offset. Pula se o topo da pilha for falso.

@@ -1,34 +1,20 @@
-#{ ===================================
-   Programa: Calculadora de Média
-   Descrição: Calcula média de 4 notas
-              e determina aprovação
-   =================================== }#
 
-print("=== CALCULADORA DE MÉDIA ===");
 
-#{ Definição das notas }#
-nota1 = 8.5;
-nota2 = 7.0;
-nota3 = 9.0;
-nota4 = 6.5;
+a = 10;
+b = 20;
 
-#{ Cálculo da média }#
-soma = nota1 + nota2 + nota3 + nota4;
-media = soma / 4;
-
-print("Nota 1: " + nota1);
-print("Nota 2: " + nota2);
-print("Nota 3: " + nota3);
-print("Nota 4: " + nota4);
-print("Média: " + media);
-
-#{ Determinação do status }#
-if (media >= 7.0) {
-    print("Status: APROVADO");
-} else if (media >= 5.0) {
-    print("Status: RECUPERAÇÃO");
+if (a < b) {
+    print("A é menor que B");
+    soma = a + b;
+    print("Soma: " + soma);
 } else {
-    print("Status: REPROVADO");
+    print("A não é menor que B");
 };
 
-print("=== FIM ===");
+contador = 3;
+while (contador > 0) {
+    print("Contagem: " + contador);
+    contador = contador - 1;
+};
+
+print("Fim da execução.");

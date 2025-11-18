@@ -2,6 +2,7 @@ from Interpreter.lexer import Lexer
 from Interpreter.parser import Parser
 from Interpreter.interpreter import Interpreter
 from Interpreter.token import TokenType
+from ast_visualizer import ASTVisualizer
 
 def get_all_tokens(text):
     lexer_debug = Lexer(text)
@@ -18,7 +19,7 @@ def main():
 
     file = 'code.txt'
     print_tokens = False
-    print_tree = False
+    print_tree = True
 
     try:
         with open(file, 'r', encoding='utf-8') as file:
@@ -40,10 +41,10 @@ def main():
                 print(all_tokens)
                 print('\n'+('__'*40)+'\n')
             
-            if print_tree:
-                print("\n[Fluxo da arvore sintatica abstrata]: \n")
-                print(ast)
-                print('\n'+('__'*40)+'\n')
+            if ast and print_tree:
+                visualizerTree = ASTVisualizer()
+                visualizerTree.generate_html(ast, "ast_tree_visualizer.html")
+
 
             
         except Exception as error:

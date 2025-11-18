@@ -76,6 +76,8 @@ class Compiler:
         elif op_type == TokenType.LT:       self.emit_byte(OpCode.OP_LESS, line)
         elif op_type == TokenType.GTE:       self.emit_byte(OpCode.OP_GREATER_EQUAL, line)
         elif op_type == TokenType.LTE:       self.emit_byte(OpCode.OP_LESS_EQUAL, line)
+        elif op_type == TokenType.AND:       self.emit_byte(OpCode.OP_AND, line)
+        elif op_type == TokenType.OR:        self.emit_byte(OpCode.OP_OR, line)
 
     def visit_VarAssignNode(self, node: ast.VarAssignNode):
         self.visit(node.value_node)

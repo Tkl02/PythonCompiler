@@ -2,11 +2,17 @@ from Interpreter.lexer import Lexer
 from Interpreter.parser import Parser
 from Compiler.compiler import Compiler
 from Compiler.disasembler import disassemble_chunk
+from Compiler.mainVirtualMachine import VirtualMachine
 import sys
 
+debug_execution = True
+
 def main():
-    if len(sys.argv) > 1: filename = sys.argv[1]
-    else: filename = 'code.txt'
+    # Pega o arquivo passado via terminal ou usa 'code.txt' como padrão
+    if len(sys.argv) > 1: 
+        filename = sys.argv[1]
+    else: 
+        filename = 'code.txt'
     
     try:
         with open(filename, 'r', encoding='utf-8') as file:
@@ -14,26 +20,36 @@ def main():
 
         if not text.strip(): return
 
-        # FASE 1: Front-end
+        print(f"--- Executando {filename} ---\n")
+
+        # 1. FASE FRONT-END (Lexer & Parser)
         lexer = Lexer(text)
         parser = Parser(lexer)
         ast = parser.parse()
 
-        if ast:
-            # FASE 2: Back-end (Compilação)
+        # Se a AST foi gerada com sucesso (sem erros de sintaxe)
+        if ast and not parser.had_error:
+            
+            # 2. FASE BACK-END (Compilador)
             compiler = Compiler()
             bytecode_chunk = compiler.compile(ast)
             
-            # Depuração: Exibe o bytecode gerado
             if bytecode_chunk:
-                disassemble_chunk(bytecode_chunk, "Bytecode Principal")
+                # Opcional: Mostra o bytecode legível
+                if debug_execution:
+                    disassemble_chunk(bytecode_chunk, "Bytecode Gerado")
+                
+                # 3. FASE DE EXECUÇÃO (Máquina Virtual)
+                print("--- Saída do Programa ---")
+                vm = VirtualMachine()
+                vm.run(bytecode_chunk)
+                print("\n-------------------------")
 
     except FileNotFoundError:
         print(f"Erro: O arquivo '{filename}' não foi encontrado.")
     except Exception as e:
-        # Erros do compilador serão pegos aqui
-        print(f"Ocorreu um erro: {e}")
-        raise
+        print(f"Ocorreu um erro crítico: {e}")
+        # raise # Descomente essa linha se quiser ver o traceback completo do Python
 
 if __name__ == "__main__":
     main()
