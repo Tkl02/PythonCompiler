@@ -1,20 +1,60 @@
+print("=== TESTE 1: Operadores || e && ===");
+a = true;
+b = false;
+c = true;
 
+if (a && c) {
+    print("a && c = true");
+};
 
-a = 10;
-b = 20;
+if (b || c) {
+    print("b || c = true");
+};
 
-if (a < b) {
-    print("A é menor que B");
-    soma = a + b;
-    print("Soma: " + soma);
+if (a && b) {
+    print("NÃO DEVE APARECER");
 } else {
-    print("A não é menor que B");
+    print("a && b = false");
 };
 
-contador = 3;
-while (contador > 0) {
-    print("Contagem: " + contador);
-    contador = contador - 1;
+print("=== TESTE 2: Auto-incremento ++ ===");
+x = 0;
+print(x);
+x++;
+print(x);
+x++;
+print(x);
+x++;
+print(x);
+
+print("=== TESTE 3: Atribuição composta +=, -= ===");
+y = 10;
+print(y);
+y += 5;
+print(y);
+y -= 3;
+print(y);
+
+print("=== TESTE 4: Combinado ===");
+contador = 0;
+while (contador < 3) {
+    print(contador);
+    contador++;
 };
 
-print("Fim da execução.");
+valor = 100;
+if (valor > 50 && valor < 200) {
+    print("valor está entre 50 e 200");
+    valor += 50;
+    print(valor);
+};
+
+print("=== TESTE 5: Duck typing booleanos ===");
+num1 = 10;
+num2 = 20;
+resultado = num1 < num2;
+print(resultado);
+
+if (resultado) {
+    print("Duck typing funcionando!");
+};

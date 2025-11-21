@@ -84,10 +84,10 @@ class Interpreter:
         elif op_type == TokenType.MINUS: result, error_msg = left.__sub__(right)
         elif op_type == TokenType.MULTIPLY: result, error_msg = left.__mul__(right)
         elif op_type == TokenType.DIVIDE: result, error_msg = left.__truediv__(right)
-        elif op_type == TokenType.AND:
+        elif op_type == TokenType.AND or op_type == TokenType.LOGICAL_AND:
             if not isinstance(left, Boolean) or not isinstance(right, Boolean): error_msg = "TypeError: Operador 'and' só pode ser usado com booleanos."
             else: result = Boolean(left.value and right.value)
-        elif op_type == TokenType.OR:
+        elif op_type == TokenType.OR or op_type == TokenType.LOGICAL_OR:
             if not isinstance(left, Boolean) or not isinstance(right, Boolean): error_msg = "TypeError: Operador 'or' só pode ser usado com booleanos."
             else: result = Boolean(left.value or right.value)
         elif op_type in (TokenType.EQ, TokenType.NEQ):
@@ -143,3 +143,40 @@ class Interpreter:
         if value is None:
             raise NameError(f"Erro na linha {node.var_name_token.lineno}: Variável '{var_name}' não definida.")
         return value
+    
+    def visit_IncrementNode(self, node: IncrementNode):
+        # Incrementa o valor de uma variável (++)
+        var_name = node.var_token.value
+        value = self.symbol_table.get(var_name)
+        if value is None:
+            raise NameError(f"Erro na linha {node.var_token.lineno}: Variável '{var_name}' não definida.")
+        if not isinstance(value, (Integer, Float)):
+            raise TypeError(f"Erro na linha {node.var_token.lineno}: Operador '++' só pode ser usado com números.")
+        if isinstance(value, Integer):
+            self.symbol_table[var_name] = Integer(value.value + 1)
+        else:
+            self.symbol_table[var_name] = Float(value.value + 1.0)
+        return self.symbol_table[var_name]
+    
+    def visit_CompoundAssignNode(self, node: CompoundAssignNode):
+        # Executa atribuição composta (+=, -=)
+        var_name = node.var_token.value
+        current_value = self.symbol_table.get(var_name)
+        if current_value is None:
+            raise NameError(f"Erro na linha {node.var_token.lineno}: Variável '{var_name}' não definida.")
+        
+        expr_value = self.visit(node.value_node)
+        op_type = node.op_token.type
+        
+        if op_type == TokenType.PLUS_ASSIGN:
+            result, error_msg = current_value.__add__(expr_value)
+        elif op_type == TokenType.MINUS_ASSIGN:
+            result, error_msg = current_value.__sub__(expr_value)
+        else:
+            raise Exception(f"Erro na linha {node.op_token.lineno}: Operador composto '{op_type.name}' não suportado.")
+        
+        if error_msg:
+            raise Exception(f"Erro na linha {node.op_token.lineno}: {error_msg}")
+        
+        self.symbol_table[var_name] = result
+        return result

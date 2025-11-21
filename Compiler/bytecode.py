@@ -7,9 +7,9 @@ ByteCode = Tuple[OpCode, int]
 
 @dataclass
 class Chunk:
-    code: List[ByteCode] = field(default_factory=list) # O código de maquina
-    constants: List[any] = field(default_factory=list) # Piscina de constantes (numeros, strings)
-    lines: List[int] = field(default_factory=list)     # Mapeamento de bytecode para linha de código
+    code: List[ByteCode] = field(default_factory=list) 
+    constants: List[any] = field(default_factory=list)
+    lines: List[int] = field(default_factory=list)
 
     def write(self, opcode: OpCode, argument: int, line: int):
         """Adiciona uma instrução ao chunk."""
@@ -19,7 +19,6 @@ class Chunk:
     def add_constant(self, value: any) -> int:
         """Adiciona uma constante à piscina e retorna seu índice."""
         try:
-            # Reutiliza a constante se ela já existir
             return self.constants.index(value)
         except ValueError:
             self.constants.append(value)

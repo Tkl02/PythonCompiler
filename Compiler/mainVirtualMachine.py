@@ -75,8 +75,7 @@ class VirtualMachine:
             
             elif opcode == OpCode.OP_NOT:
                 val = self.stack.pop()
-
-                is_true = val.value if hasattr(val, 'value') else False
+                is_true = self.is_truthy(val)
                 self.stack.append(Boolean(not is_true))
 
             elif opcode in [OpCode.OP_EQUAL, OpCode.OP_NOT_EQUAL, OpCode.OP_GREATER, OpCode.OP_LESS, OpCode.OP_GREATER_EQUAL, OpCode.OP_LESS_EQUAL]:
@@ -120,8 +119,7 @@ class VirtualMachine:
 
             elif opcode == OpCode.OP_JUMP_IF_FALSE:
                 val = self.stack.pop()
-                is_true = val.value if hasattr(val, 'value') else False
-                if not is_true:
+                if not self.is_truthy(val):
                     self.ip += arg
             
             elif opcode == OpCode.OP_CALL_PRINT:
@@ -137,3 +135,10 @@ class VirtualMachine:
             line = self.chunk.lines[self.ip - 1]
 
         print(f"[Erro de Execução na VM] Linha -> {line}: {message} ")
+    
+    def is_truthy(self, value: Value) -> bool:
+        if isinstance(value, Boolean): return value.value
+        if isinstance(value, (Integer, Float)): return value.value != 0
+        if isinstance(value, String): return value.value != ""
+        return True
+    

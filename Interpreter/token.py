@@ -46,6 +46,14 @@ class TokenType(Enum):
     # Fim de arquivo
     EOF = 'EOF'
 
+    # Novos operadores
+    PLUS_PLUS = 'PLUS_PLUS'
+    PLUS_ASSIGN = 'PLUS_ASSIGN'
+    MINUS_ASSIGN = 'MINUS_ASSIGN'
+
+    LOGICAL_AND = 'LOGICAL_AND'
+    LOGICAL_OR = 'LOGICAL_OR'
+    
 class Token:
     def __init__(self, type: TokenType, value: any = None, lineno: int = 0):
         self.type = type

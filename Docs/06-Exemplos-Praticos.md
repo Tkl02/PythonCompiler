@@ -791,3 +791,315 @@ Percentual acima da meta: 50%
 RESULTADO: Meta média ATINGIDA!
 === FIM DO RELATÓRIO ===
 ```
+
+---
+
+## 12. Contador com Auto-Incremento
+
+**Objetivo:** Demonstrar uso do operador `++` para incrementos.
+
+```
+#{===================================
+  Programa: Contador Regressivo
+  Descrição: Usa ++ para contagem
+  ===================================}#
+
+print("=== CONTADOR SIMPLES ===");
+
+contador = 0;
+
+print("Contando de 0 a 5:");
+
+while (contador < 5) {
+    print("Contador: " + contador);
+    contador++;  #{ Incremento automático }#
+};
+
+print("Valor final: " + contador);
+print("=== FIM ===");
+```
+
+**Saída:**
+```
+=== CONTADOR SIMPLES ===
+Contando de 0 a 5:
+Contador: 0
+Contador: 1
+Contador: 2
+Contador: 3
+Contador: 4
+Valor final: 5
+=== FIM ===
+```
+
+---
+
+## 13. Sistema de Pontuação com Operadores Compostos
+
+**Objetivo:** Demonstrar uso de `+=` e `-=` em sistema de pontos.
+
+```
+#{===================================
+  Programa: Sistema de Pontuação
+  Descrição: Gerencia pontos com +=/-=
+  ===================================}#
+
+print("=== SISTEMA DE PONTUAÇÃO ===");
+
+pontos = 0;
+print("Pontos iniciais: " + pontos);
+
+#{ Ganhar pontos }#
+print("\n--- AÇÕES POSITIVAS ---");
+print("Completou missão principal...");
+pontos += 100;
+print("Pontos: " + pontos);
+
+print("Achou item secreto...");
+pontos += 50;
+print("Pontos: " + pontos);
+
+print("Derrotou chefe...");
+pontos += 200;
+print("Pontos: " + pontos);
+
+#{ Perder pontos }#
+print("\n--- PENALIDADES ---");
+print("Recebeu dano...");
+pontos -= 30;
+print("Pontos: " + pontos);
+
+print("Usou item raro...");
+pontos -= 20;
+print("Pontos: " + pontos);
+
+#{ Resultado final }#
+print("\n=== PONTUAÇÃO FINAL ===");
+print("Total: " + pontos + " pontos");
+
+if (pontos >= 300) {
+    print("Classificação: MESTRE");
+} else if (pontos >= 200) {
+    print("Classificação: EXPERT");
+} else if (pontos >= 100) {
+    print("Classificação: INTERMEDIÁRIO");
+} else {
+    print("Classificação: INICIANTE");
+};
+```
+
+**Saída:**
+```
+=== SISTEMA DE PONTUAÇÃO ===
+Pontos iniciais: 0
+
+--- AÇÕES POSITIVAS ---
+Completou missão principal...
+Pontos: 100
+Achou item secreto...
+Pontos: 150
+Derrotou chefe...
+Pontos: 350
+
+--- PENALIDADES ---
+Recebeu dano...
+Pontos: 320
+Usou item raro...
+Pontos: 300
+
+=== PONTUAÇÃO FINAL ===
+Total: 300 pontos
+Classificação: MESTRE
+```
+
+---
+
+## 14. Validação com Operadores Lógicos Simbólicos
+
+**Objetivo:** Demonstrar uso de `&&` e `||` em validações.
+
+```
+#{===================================
+  Programa: Sistema de Validação
+  Descrição: Usa && e || para regras
+  ===================================}#
+
+print("=== SISTEMA DE VALIDAÇÃO DE ACESSO ===");
+
+#{ Dados do usuário }#
+idade = 25;
+possui_id = true;
+e_membro = true;
+dia_semana = 5;  #{ 5 = sexta-feira }#
+
+print("Idade: " + idade);
+print("Possui ID: " + possui_id);
+print("É membro: " + e_membro);
+print("Dia da semana: " + dia_semana);
+
+#{ Regra 1: Maior de 18 E possui ID }#
+pode_entrar_basico = (idade >= 18) && possui_id;
+print("\nPode entrar (básico): " + pode_entrar_basico);
+
+#{ Regra 2: É membro OU (maior de 21 E fim de semana) }#
+fim_semana = (dia_semana == 5) || (dia_semana == 6);
+pode_area_vip = e_membro || ((idade >= 21) && fim_semana);
+print("Acesso VIP: " + pode_area_vip);
+
+#{ Regra 3: Validação completa }#
+acesso_completo = pode_entrar_basico && pode_area_vip;
+
+print("\n=== RESULTADO ===");
+if (acesso_completo) {
+    print("ACESSO LIBERADO - VIP");
+} else if (pode_entrar_basico) {
+    print("ACESSO LIBERADO - Área comum");
+} else {
+    print("ACESSO NEGADO");
+};
+```
+
+**Saída:**
+```
+=== SISTEMA DE VALIDAÇÃO DE ACESSO ===
+Idade: 25
+Possui ID: true
+É membro: true
+Dia da semana: 5
+
+Pode entrar (básico): true
+Acesso VIP: true
+
+=== RESULTADO ===
+ACESSO LIBERADO - VIP
+```
+
+---
+
+## 15. Simulador de Jogo com Todas as Funcionalidades
+
+**Objetivo:** Combinar `++`, `+=`, `-=`, `&&` e `||` em um programa completo.
+
+```
+#{===================================
+  Programa: Simulador de Batalha RPG
+  Descrição: Demonstra todas as novas
+             funcionalidades combinadas
+  ===================================}#
+
+print("=== SIMULADOR DE BATALHA RPG ===\n");
+
+#{ Status do jogador }#
+vida = 100;
+mana = 50;
+nivel = 1;
+experiencia = 0;
+
+#{ Status do inimigo }#
+vida_inimigo = 80;
+
+print("--- STATUS INICIAL ---");
+print("Jogador - Vida: " + vida + " | Mana: " + mana + " | Nível: " + nivel);
+print("Inimigo - Vida: " + vida_inimigo);
+
+turno = 0;
+
+#{ Loop de batalha }#
+while ((vida > 0) && (vida_inimigo > 0)) {
+    turno++;
+    print("\n--- TURNO " + turno + " ---");
+    
+    #{ Jogador ataca }#
+    tem_mana = mana >= 10;
+    pode_especial = tem_mana && (nivel >= 1);
+    
+    if (pode_especial) {
+        print("Ataque especial!");
+        vida_inimigo -= 25;
+        mana -= 10;
+    } else {
+        print("Ataque normal!");
+        vida_inimigo -= 10;
+    };
+    
+    print("Vida inimigo: " + vida_inimigo);
+    
+    #{ Verifica se inimigo morreu }#
+    if (vida_inimigo <= 0) {
+        print("\n=== VITÓRIA! ===");
+        experiencia += 100;
+        print("XP ganho: 100");
+        break;
+    };
+    
+    #{ Inimigo ataca }#
+    print("Inimigo contra-ataca!");
+    vida -= 15;
+    print("Sua vida: " + vida);
+    
+    #{ Regeneração de mana }#
+    mana += 5;
+    if (mana > 50) {
+        mana = 50;
+    };
+};
+
+#{ Resultado final }#
+print("\n--- STATUS FINAL ---");
+print("Vida: " + vida);
+print("Mana: " + mana);
+print("XP: " + experiencia);
+
+sobreviveu = vida > 0;
+venceu = (vida > 0) && (vida_inimigo <= 0);
+
+if (venceu) {
+    print("\nRESULTADO: VENCEU A BATALHA!");
+} else if (sobreviveu) {
+    print("\nRESULTADO: Batalha em andamento...");
+} else {
+    print("\nRESULTADO: DERROTADO!");
+};
+```
+
+**Saída (exemplo):**
+```
+=== SIMULADOR DE BATALHA RPG ===
+
+--- STATUS INICIAL ---
+Jogador - Vida: 100 | Mana: 50 | Nível: 1
+Inimigo - Vida: 80
+
+--- TURNO 1 ---
+Ataque especial!
+Vida inimigo: 55
+Inimigo contra-ataca!
+Sua vida: 85
+
+--- TURNO 2 ---
+Ataque especial!
+Vida inimigo: 30
+Inimigo contra-ataca!
+Sua vida: 70
+
+--- TURNO 3 ---
+Ataque especial!
+Vida inimigo: 5
+Inimigo contra-ataca!
+Sua vida: 55
+
+--- TURNO 4 ---
+Ataque especial!
+Vida inimigo: -20
+
+=== VITÓRIA! ===
+XP ganho: 100
+
+--- STATUS FINAL ---
+Vida: 55
+Mana: 20
+XP: 100
+
+RESULTADO: VENCEU A BATALHA!
+```
+

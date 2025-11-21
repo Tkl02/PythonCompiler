@@ -13,6 +13,8 @@ programa         ::= declaração* EOF
 
 declaração       ::= instrução_break
                    | instrução_atribuição
+                   | instrução_incremento
+                   | instrução_composta
                    | instrução_while
                    | instrução_if
                    | instrução_expressão
@@ -32,6 +34,16 @@ instrução_break  ::= 'break' ';'
 ### Atribuição
 ```ebnf
 instrução_atribuição ::= IDENTIFICADOR '=' expressão ';'
+```
+
+### Incremento
+```ebnf
+instrução_incremento ::= IDENTIFICADOR '++' ';'
+```
+
+### Atribuição Composta
+```ebnf
+instrução_composta ::= IDENTIFICADOR ('+=' | '-=') expressão ';'
 ```
 
 ### If-Else
@@ -56,12 +68,12 @@ bloco_composto   ::= (declaração ';'?)*
 
 ### Nível 1: OR Lógico (menor precedência)
 ```ebnf
-expressão        ::= and_expressão ('or' and_expressão)*
+expressão        ::= and_expressão (('or' | '||') and_expressão)*
 ```
 
 ### Nível 2: AND Lógico
 ```ebnf
-and_expressão    ::= comp_expressão ('and' comp_expressão)*
+and_expressão    ::= comp_expressão (('and' | '&&') comp_expressão)*
 ```
 
 ### Nível 3: Comparação

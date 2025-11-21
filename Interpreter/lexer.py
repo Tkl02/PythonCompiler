@@ -110,8 +110,16 @@ class Lexer:
 
             if self.current_char == '=': self.advance(); return Token(TokenType.ASSIGN, '=', self.lineno)
             if self.current_char == ';': self.advance(); return Token(TokenType.SEMICOLON, ';', self.lineno)
-            if self.current_char == '+': self.advance(); return Token(TokenType.PLUS, "+", self.lineno)
-            if self.current_char == '-': self.advance(); return Token(TokenType.MINUS, "-", self.lineno)
+            if self.current_char == '+':
+                if self.peek() == '+':
+                    self.advance(); self.advance(); return Token(TokenType.PLUS_PLUS, "++", self.lineno)
+                if self.peek() == '=':
+                    self.advance(); self.advance(); return Token(TokenType.PLUS_ASSIGN, "+=", self.lineno)
+                self.advance(); return Token(TokenType.PLUS, "+", self.lineno)
+            if self.current_char == '-':
+                if self.peek() == '=':
+                    self.advance(); self.advance(); return Token(TokenType.MINUS_ASSIGN, "-=", self.lineno)
+                self.advance(); return Token(TokenType.MINUS, "-", self.lineno)
             if self.current_char == '*': self.advance(); return Token(TokenType.MULTIPLY, "*", self.lineno)
             if self.current_char == '/': self.advance(); return Token(TokenType.DIVIDE, "/", self.lineno)
             if self.current_char == '<': self.advance(); return Token(TokenType.LT, '<', self.lineno)
@@ -120,6 +128,11 @@ class Lexer:
             if self.current_char == ')': self.advance(); return Token(TokenType.RPAREN, ")", self.lineno)
             if self.current_char == '{': self.advance(); return Token(TokenType.LBRACE, '{', self.lineno)
             if self.current_char == '}': self.advance(); return Token(TokenType.RBRACE, '}', self.lineno)
+            if self.current_char == '&' and self.peek() == '&':
+                self.advance(); self.advance(); return Token(TokenType.LOGICAL_AND, "&&", self.lineno)
+            
+            if self.current_char == '|' and self.peek() == '|':
+                self.advance(); self.advance(); return Token(TokenType.LOGICAL_OR, "||", self.lineno)
 
             self.error()
         

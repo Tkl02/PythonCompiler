@@ -18,14 +18,14 @@ def constant_instruction(name: str, chunk: Chunk, arg: int) -> int:
     """Formata uma instrução que referencia uma constante."""
     constant_value = chunk.constants[arg]
     print(f"{name:<16} {arg:4d} '{constant_value}'")
-    return 1 # Retorna o tamanho da instrução (1 byte para opcode + 1 para arg, mas o loop cuida do offset)
+    return 1
 
 def jump_instruction(name: str, sign: int, arg: int, offset: int) -> int:
     """Formata uma instrução de pulo."""
     jump = arg * sign
     target = offset + 1 + jump
     print(f"{name:<16} {offset:4d} -> {target}")
-    return 2 # Retorna o tamanho da instrução
+    return 2
 
 def disassemble_instruction(chunk: Chunk, offset: int) -> int:
     """Desmonta e exibe uma única instrução de bytecode."""
@@ -38,13 +38,12 @@ def disassemble_instruction(chunk: Chunk, offset: int) -> int:
 
     opcode, arg = chunk.code[offset]
 
-    # Mapeamento de opcodes para suas funções de formatação
     if opcode in [
         OpCode.OP_RETURN, OpCode.OP_POP, OpCode.OP_LOAD_TRUE, OpCode.OP_LOAD_FALSE,
         OpCode.OP_LOAD_NIL, OpCode.OP_ADD, OpCode.OP_SUBTRACT, OpCode.OP_MULTIPLY,
         OpCode.OP_DIVIDE, OpCode.OP_EQUAL, OpCode.OP_NOT_EQUAL, OpCode.OP_GREATER,
         OpCode.OP_LESS, OpCode.OP_NEGATE, OpCode.OP_NOT, OpCode.OP_CALL_PRINT,
-        OpCode.OP_GREATER_EQUAL ,OpCode.OP_LESS_EQUAL
+        OpCode.OP_GREATER_EQUAL, OpCode.OP_LESS_EQUAL, OpCode.OP_AND, OpCode.OP_OR
     ]:
         simple_instruction(opcode.name, offset)
         return offset + 1

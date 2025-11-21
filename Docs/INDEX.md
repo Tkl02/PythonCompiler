@@ -7,10 +7,13 @@ Este índice ajuda a encontrar rapidamente tópicos específicos na documentaç�
 ## A
 
 - **And (operador lógico)** → [03-Operadores.md](03-Operadores.md#operadores-lógicos)
+- **&& (operador lógico)** → [03-Operadores.md](03-Operadores.md#and-and-ou--)
 - **Aritmética** → [03-Operadores.md](03-Operadores.md#operadores-aritméticos)
 - **Arrays (futuro)** → [11-Guia-Extensao.md](11-Guia-Extensao.md#arrays-listas)
 - **AST (Árvore Sintática)** → [07-Arquitetura-Compilador.md](07-Arquitetura-Compilador.md#ast-nodes)
+- **Atribuição composta (+=, -=)** → [03-Operadores.md](03-Operadores.md#atribuição-com-adição-)
 - **Atribuição de variáveis** → [05-Variaveis.md](05-Variaveis.md#declaração-e-atribuição)
+- **Auto-incremento (++)** → [03-Operadores.md](03-Operadores.md#auto-incremento-)
 
 ## B
 
@@ -85,7 +88,9 @@ Este índice ajuda a encontrar rapidamente tópicos específicos na documentaç�
 
 - **OpCodes** → [08-Referencia-Bytecode.md](08-Referencia-Bytecode.md#categorias-de-opcodes)
 - **Operadores** → [03-Operadores.md](03-Operadores.md)
+- **Operadores compostos (++, +=, -=)** → [03-Operadores.md](03-Operadores.md#auto-incremento-)
 - **Or (operador lógico)** → [03-Operadores.md](03-Operadores.md#or)
+- **|| (operador lógico)** → [03-Operadores.md](03-Operadores.md#or-or-ou-)
 
 ## P
 

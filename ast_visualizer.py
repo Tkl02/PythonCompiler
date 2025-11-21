@@ -80,6 +80,18 @@ class ASTVisualizer:
         self.html_lines.append("</ul></li>")
         self.html_lines.append("</ul></li>")
     
+    def visit_IncrementNode(self, node: ast.IncrementNode):
+        self.html_lines.append(f"<li><span><strong>Increment (++)</strong> {html.escape(node.var_token.value)}</span></li>")
+    
+    def visit_CompoundAssignNode(self, node: ast.CompoundAssignNode):
+        op_symbol = "+=" if node.op_token.type == TokenType.PLUS_ASSIGN else "-="
+        self.html_lines.append(f"<li><span><strong>CompoundAssign ({op_symbol})</strong> {html.escape(node.var_token.value)}</span>")
+        self.html_lines.append("<ul>")
+        self.html_lines.append("<li><span><em>Value</em></span><ul>")
+        self.visit(node.value_node)
+        self.html_lines.append("</ul></li>")
+        self.html_lines.append("</ul></li>")
+    
     def visit_PrintNode(self, node: ast.PrintNode):
         self.html_lines.append("<li><span><strong>Print</strong></span>")
         self.html_lines.append("<ul>")
@@ -134,7 +146,7 @@ class ASTVisualizer:
             """
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: linear-gradient(45deg,rgba(0, 180, 216, 1) 0%, rgba(0, 150, 199, 1) 10%, rgba(0, 119, 182, 1) 20%, rgba(2, 62, 138, 1) 40%, rgba(3, 4, 94, 1) 80%);
                 color: #333;
                 padding: 20px;
                 margin: 0;
@@ -294,7 +306,7 @@ class ASTVisualizer:
             .tree .node-while strong { color: #4facfe; }
             .tree .node-print strong { color: #43e97b; }
             .tree .node-binop strong { color: #fa709a; }
-            .tree .node-assign strong { color: #feca57; }
+            .tree .node-assign strong { color: #ff6600; }
             .tree .node-number strong { color: #48dbfb; }
             .tree .node-string strong { color: #ff9ff3; }
             .tree .node-boolean strong { color: #54a0ff; }
@@ -335,7 +347,7 @@ class ASTVisualizer:
             """
         )
         self.html_lines.append("</style></head><body>")
-        self.html_lines.append("<h1>🌳 Visualização da Árvore Sintática Abstrata (AST)</h1>")
+        self.html_lines.append("<h1> Visualização da Árvore Sintática Abstrata (AST)</h1>")
         self.html_lines.append("<div class=\"tree-container\">")
 
     def _add_footer(self):

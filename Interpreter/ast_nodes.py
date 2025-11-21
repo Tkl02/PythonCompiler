@@ -116,3 +116,17 @@ class BreakNode:
         self.token = token
     def __repr__(self):
         return "(BREAK)"
+
+class IncrementNode:
+    def __init__(self, var_token):
+        self.var_token = var_token
+    def __repr__(self):
+        return f'(Increment {self.var_token.value})'
+    
+class CompoundAssignNode:
+    def __init__(self, var_token, value_node, op_token):
+        self.var_token = var_token
+        self.value_node = value_node
+        self.op_token = op_token
+    def __repr__(self):
+        return f'(COMPOUND {self.var_token.value} {self.op_token.type.name} {self.value_node})'

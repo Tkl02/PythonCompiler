@@ -78,6 +78,8 @@ class Compiler:
         elif op_type == TokenType.LTE:       self.emit_byte(OpCode.OP_LESS_EQUAL, line)
         elif op_type == TokenType.AND:       self.emit_byte(OpCode.OP_AND, line)
         elif op_type == TokenType.OR:        self.emit_byte(OpCode.OP_OR, line)
+        elif op_type == TokenType.LOGICAL_OR:        self.emit_byte(OpCode.OP_OR, line)
+        elif op_type == TokenType.LOGICAL_AND:        self.emit_byte(OpCode.OP_AND, line)
 
     def visit_VarAssignNode(self, node: ast.VarAssignNode):
         self.visit(node.value_node)
@@ -130,3 +132,41 @@ class Compiler:
 
         jump = self.emit_jump(OpCode.OP_JUMP_FORWARD, node.token.lineno)
         self.loop_contexts[-1].append(jump)
+    
+    def visit_IncrementNode(self, node:ast.IncrementNode):
+        var_name = node.var_token.value
+        name_idx = self.chunk.add_constant(var_name)
+
+        self.chunk.write(OpCode.OP_LOAD_GLOBAL, name_idx, node.var_token.lineno)
+        
+        one_idx = self.chunk.add_constant(1)
+        self.chunk.write(OpCode.OP_LOAD_CONST, one_idx, node.var_token.lineno)
+
+        self.chunk.write(OpCode.OP_ADD, 0, node.var_token.lineno)
+
+        self.chunk.write(OpCode.OP_STORE_GLOBAL, name_idx, node.var_token.lineno)
+
+        self.chunk.write(OpCode.OP_POP, 0, node.var_token.lineno)
+    
+    def visit_CompoundAssignNode(self, node: ast.CompoundAssignNode):
+        # Lógica: i += 5  ==>  i = i + 5
+        var_name = node.var_token.value
+        name_idx = self.chunk.add_constant(var_name)
+
+        # 1. Carrega o valor atual de i
+        self.chunk.write(OpCode.OP_LOAD_GLOBAL, name_idx, node.var_token.lineno)
+
+        # 2. Compila a expressão (o valor a somar/subtrair)
+        self.visit(node.value_node)
+
+        # 3. Realiza a operação
+        if node.op_token.type == TokenType.PLUS_ASSIGN:
+            self.chunk.write(OpCode.OP_ADD, 0, node.op_token.lineno)
+        elif node.op_token.type == TokenType.MINUS_ASSIGN:
+            self.chunk.write(OpCode.OP_SUBTRACT, 0, node.op_token.lineno)
+
+        # 4. Salva de volta
+        self.chunk.write(OpCode.OP_STORE_GLOBAL, name_idx, node.op_token.lineno)
+        
+        # 5. Limpa a pilha
+        self.chunk.write(OpCode.OP_POP, 0, node.op_token.lineno)

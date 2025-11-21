@@ -5,7 +5,7 @@
 
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: linear-gradient(45deg,rgba(0, 180, 216, 1) 0%, rgba(0, 150, 199, 1) 10%, rgba(0, 119, 182, 1) 20%, rgba(2, 62, 138, 1) 40%, rgba(3, 4, 94, 1) 80%);
                 color: #333;
                 padding: 20px;
                 margin: 0;
@@ -165,7 +165,7 @@
             .tree .node-while strong { color: #4facfe; }
             .tree .node-print strong { color: #43e97b; }
             .tree .node-binop strong { color: #fa709a; }
-            .tree .node-assign strong { color: #feca57; }
+            .tree .node-assign strong { color: #ff6600; }
             .tree .node-number strong { color: #48dbfb; }
             .tree .node-string strong { color: #ff9ff3; }
             .tree .node-boolean strong { color: #54a0ff; }
@@ -205,7 +205,7 @@
             }
             
 </style></head><body>
-<h1>🌳 Visualização da Árvore Sintática Abstrata (AST)</h1>
+<h1> Visualização da Árvore Sintática Abstrata (AST)</h1>
 <div class="tree-container">
 <ul class="tree">
 <li><span><strong>Compound (Bloco)</strong></span>
@@ -213,58 +213,77 @@
 <li><span><strong>Print</strong></span>
 <ul>
 <li><span><em>Expr</em></span><ul>
-<li><span><strong>String:</strong> &quot;--- Teste da VM ---&quot;</span></li>
+<li><span><strong>String:</strong> &quot;=== TESTE 1: Operadores || e &amp;&amp; ===&quot;</span></li>
 </ul></li>
 </ul></li>
 <li><span><strong>Assign</strong> a</span>
 <ul>
 <li><span><em>Value</em></span><ul>
-<li><span><strong>Number:</strong> 10</span></li>
+<li><span><strong>Boolean:</strong> true</span></li>
 </ul></li>
 </ul></li>
 <li><span><strong>Assign</strong> b</span>
 <ul>
 <li><span><em>Value</em></span><ul>
-<li><span><strong>Number:</strong> 20</span></li>
+<li><span><strong>Boolean:</strong> false</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Assign</strong> c</span>
+<ul>
+<li><span><em>Value</em></span><ul>
+<li><span><strong>Boolean:</strong> true</span></li>
 </ul></li>
 </ul></li>
 <li><span><strong>If</strong></span>
 <ul>
 <li><span><em>Condition</em></span><ul>
-<li><span><strong>BinOp</strong> LT </span>
+<li><span><strong>BinOp</strong> LOGICAL_AND </span>
+<ul>
+<li><span><strong>VarAccess:</strong> a</span></li>
+<li><span><strong>VarAccess:</strong> c</span></li>
+</ul></li>
+</ul></li>
+<li><span><em>Then Block</em></span><ul>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>String:</strong> &quot;a &amp;&amp; c = true&quot;</span></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><span><strong>If</strong></span>
+<ul>
+<li><span><em>Condition</em></span><ul>
+<li><span><strong>BinOp</strong> LOGICAL_OR </span>
+<ul>
+<li><span><strong>VarAccess:</strong> b</span></li>
+<li><span><strong>VarAccess:</strong> c</span></li>
+</ul></li>
+</ul></li>
+<li><span><em>Then Block</em></span><ul>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>String:</strong> &quot;b || c = true&quot;</span></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><span><strong>If</strong></span>
+<ul>
+<li><span><em>Condition</em></span><ul>
+<li><span><strong>BinOp</strong> LOGICAL_AND </span>
 <ul>
 <li><span><strong>VarAccess:</strong> a</span></li>
 <li><span><strong>VarAccess:</strong> b</span></li>
 </ul></li>
 </ul></li>
 <li><span><em>Then Block</em></span><ul>
-<li><span><strong>Compound (Bloco)</strong></span>
-<ul>
 <li><span><strong>Print</strong></span>
 <ul>
 <li><span><em>Expr</em></span><ul>
-<li><span><strong>String:</strong> &quot;A é menor que B&quot;</span></li>
-</ul></li>
-</ul></li>
-<li><span><strong>Assign</strong> soma</span>
-<ul>
-<li><span><em>Value</em></span><ul>
-<li><span><strong>BinOp</strong> PLUS </span>
-<ul>
-<li><span><strong>VarAccess:</strong> a</span></li>
-<li><span><strong>VarAccess:</strong> b</span></li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li><span><strong>Print</strong></span>
-<ul>
-<li><span><em>Expr</em></span><ul>
-<li><span><strong>BinOp</strong> PLUS </span>
-<ul>
-<li><span><strong>String:</strong> &quot;Soma: &quot;</span></li>
-<li><span><strong>VarAccess:</strong> soma</span></li>
-</ul></li>
-</ul></li>
+<li><span><strong>String:</strong> &quot;NÃO DEVE APARECER&quot;</span></li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -272,24 +291,111 @@
 <li><span><strong>Print</strong></span>
 <ul>
 <li><span><em>Expr</em></span><ul>
-<li><span><strong>String:</strong> &quot;A não é menor que B&quot;</span></li>
+<li><span><strong>String:</strong> &quot;a &amp;&amp; b = false&quot;</span></li>
 </ul></li>
 </ul></li>
 </ul></li>
 </ul></li>
-<li><span><strong>Assign</strong> contador</span>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>String:</strong> &quot;=== TESTE 2: Auto-incremento ++ ===&quot;</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Assign</strong> x</span>
+<ul>
+<li><span><em>Value</em></span><ul>
+<li><span><strong>Number:</strong> 0</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>VarAccess:</strong> x</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Increment (++)</strong> x</span></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>VarAccess:</strong> x</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Increment (++)</strong> x</span></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>VarAccess:</strong> x</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Increment (++)</strong> x</span></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>VarAccess:</strong> x</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>String:</strong> &quot;=== TESTE 3: Atribuição composta +=, -= ===&quot;</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Assign</strong> y</span>
+<ul>
+<li><span><em>Value</em></span><ul>
+<li><span><strong>Number:</strong> 10</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>VarAccess:</strong> y</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>CompoundAssign (+=)</strong> y</span>
+<ul>
+<li><span><em>Value</em></span><ul>
+<li><span><strong>Number:</strong> 5</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>VarAccess:</strong> y</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>CompoundAssign (-=)</strong> y</span>
 <ul>
 <li><span><em>Value</em></span><ul>
 <li><span><strong>Number:</strong> 3</span></li>
 </ul></li>
 </ul></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>VarAccess:</strong> y</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>String:</strong> &quot;=== TESTE 4: Combinado ===&quot;</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Assign</strong> contador</span>
+<ul>
+<li><span><em>Value</em></span><ul>
+<li><span><strong>Number:</strong> 0</span></li>
+</ul></li>
+</ul></li>
 <li><span><strong>While</strong></span>
 <ul>
 <li><span><em>Condition</em></span><ul>
-<li><span><strong>BinOp</strong> GT </span>
+<li><span><strong>BinOp</strong> LT </span>
 <ul>
 <li><span><strong>VarAccess:</strong> contador</span></li>
-<li><span><strong>Number:</strong> 0</span></li>
+<li><span><strong>Number:</strong> 3</span></li>
 </ul></li>
 </ul></li>
 <li><span><em>Body Block</em></span><ul>
@@ -298,21 +404,55 @@
 <li><span><strong>Print</strong></span>
 <ul>
 <li><span><em>Expr</em></span><ul>
-<li><span><strong>BinOp</strong> PLUS </span>
-<ul>
-<li><span><strong>String:</strong> &quot;Contagem: &quot;</span></li>
 <li><span><strong>VarAccess:</strong> contador</span></li>
 </ul></li>
 </ul></li>
+<li><span><strong>Increment (++)</strong> contador</span></li>
 </ul></li>
-<li><span><strong>Assign</strong> contador</span>
+</ul></li>
+</ul></li>
+<li><span><strong>Assign</strong> valor</span>
 <ul>
 <li><span><em>Value</em></span><ul>
-<li><span><strong>BinOp</strong> MINUS </span>
-<ul>
-<li><span><strong>VarAccess:</strong> contador</span></li>
-<li><span><strong>Number:</strong> 1</span></li>
+<li><span><strong>Number:</strong> 100</span></li>
 </ul></li>
+</ul></li>
+<li><span><strong>If</strong></span>
+<ul>
+<li><span><em>Condition</em></span><ul>
+<li><span><strong>BinOp</strong> LOGICAL_AND </span>
+<ul>
+<li><span><strong>BinOp</strong> GT </span>
+<ul>
+<li><span><strong>VarAccess:</strong> valor</span></li>
+<li><span><strong>Number:</strong> 50</span></li>
+</ul></li>
+<li><span><strong>BinOp</strong> LT </span>
+<ul>
+<li><span><strong>VarAccess:</strong> valor</span></li>
+<li><span><strong>Number:</strong> 200</span></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><span><em>Then Block</em></span><ul>
+<li><span><strong>Compound (Bloco)</strong></span>
+<ul>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>String:</strong> &quot;valor está entre 50 e 200&quot;</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>CompoundAssign (+=)</strong> valor</span>
+<ul>
+<li><span><em>Value</em></span><ul>
+<li><span><strong>Number:</strong> 50</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>VarAccess:</strong> valor</span></li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -321,7 +461,49 @@
 <li><span><strong>Print</strong></span>
 <ul>
 <li><span><em>Expr</em></span><ul>
-<li><span><strong>String:</strong> &quot;Fim da execução.&quot;</span></li>
+<li><span><strong>String:</strong> &quot;=== TESTE 5: Duck typing booleanos ===&quot;</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Assign</strong> num1</span>
+<ul>
+<li><span><em>Value</em></span><ul>
+<li><span><strong>Number:</strong> 10</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Assign</strong> num2</span>
+<ul>
+<li><span><em>Value</em></span><ul>
+<li><span><strong>Number:</strong> 20</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Assign</strong> resultado</span>
+<ul>
+<li><span><em>Value</em></span><ul>
+<li><span><strong>BinOp</strong> LT </span>
+<ul>
+<li><span><strong>VarAccess:</strong> num1</span></li>
+<li><span><strong>VarAccess:</strong> num2</span></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>VarAccess:</strong> resultado</span></li>
+</ul></li>
+</ul></li>
+<li><span><strong>If</strong></span>
+<ul>
+<li><span><em>Condition</em></span><ul>
+<li><span><strong>VarAccess:</strong> resultado</span></li>
+</ul></li>
+<li><span><em>Then Block</em></span><ul>
+<li><span><strong>Print</strong></span>
+<ul>
+<li><span><em>Expr</em></span><ul>
+<li><span><strong>String:</strong> &quot;Duck typing funcionando!&quot;</span></li>
+</ul></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul></li>

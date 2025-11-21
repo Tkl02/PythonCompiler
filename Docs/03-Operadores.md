@@ -76,6 +76,101 @@ print(d);  #{ Saída: -5 }#
 
 ---
 
+### Auto-incremento (`++`)
+
+Incrementa o valor de uma variável em 1. Equivalente a `variavel = variavel + 1`.
+
+**Sintaxe:**
+```
+variavel++;
+```
+
+**Exemplos:**
+
+```
+#{ Incremento simples }#
+contador = 0;
+contador++;
+print(contador);  #{ Saída: 1 }#
+contador++;
+print(contador);  #{ Saída: 2 }#
+
+#{ Uso em loops }#
+i = 0;
+while (i < 3) {
+    print(i);
+    i++;
+};
+#{ Saída: 0, 1, 2 }#
+```
+
+**Nota:** O operador `++` só funciona com variáveis do tipo Integer ou Float.
+
+---
+
+### Atribuição com Adição (`+=`)
+
+Adiciona um valor à variável e atribui o resultado. Equivalente a `variavel = variavel + valor`.
+
+**Sintaxe:**
+```
+variavel += expressão;
+```
+
+**Exemplos:**
+
+```
+#{ Com inteiros }#
+total = 10;
+total += 5;
+print(total);  #{ Saída: 15 }#
+
+#{ Com floats }#
+saldo = 100.50;
+saldo += 25.30;
+print(saldo);  #{ Saída: 125.8 }#
+
+#{ Com expressões }#
+x = 10;
+x += (5 * 2);
+print(x);  #{ Saída: 20 }#
+```
+
+---
+
+### Atribuição com Subtração (`-=`)
+
+Subtrai um valor da variável e atribui o resultado. Equivalente a `variavel = variavel - valor`.
+
+**Sintaxe:**
+```
+variavel -= expressão;
+```
+
+**Exemplos:**
+
+```
+#{ Com inteiros }#
+pontos = 100;
+pontos -= 30;
+print(pontos);  #{ Saída: 70 }#
+
+#{ Com floats }#
+temperatura = 25.5;
+temperatura -= 3.2;
+print(temperatura);  #{ Saída: 22.3 }#
+
+#{ Decremento gradual }#
+vida = 100;
+vida -= 10;
+vida -= 20;
+print(vida);  #{ Saída: 70 }#
+```
+
+**Nota:** Os operadores `+=` e `-=` funcionam apenas com tipos numéricos (Integer e Float).
+
+---
+
 ### Multiplicação (`*`)
 
 Multiplica dois números ou repete uma string.
@@ -332,7 +427,13 @@ resultado2 = true > 5;     #{ ERRO }#
 
 Operam sobre valores booleanos e retornam Boolean.
 
-### AND (`and`)
+**Nota:** A linguagem suporta duas sintaxes para operadores lógicos:
+- **Forma textual**: `and`, `or`, `not`
+- **Forma simbólica**: `&&`, `||` (not continua como `not`)
+
+Ambas as formas são equivalentes e podem ser usadas intercambiavelmente.
+
+### AND (`and` ou `&&`)
 
 Retorna `true` apenas se ambos os operandos forem `true`.
 
@@ -347,29 +448,35 @@ Retorna `true` apenas se ambos os operandos forem `true`.
 **Exemplos:**
 
 ```
-#{ Ambos verdadeiros }#
+#{ Forma textual (and) }#
 a = true and true;
 print(a);  #{ Saída: true }#
 
-#{ Um falso }#
 b = true and false;
 print(b);  #{ Saída: false }#
 
-#{ Ambos falsos }#
-c = false and false;
+#{ Forma simbólica (&&) }#
+c = false && true;
 print(c);  #{ Saída: false }#
+
+d = false && false;
+print(d);  #{ Saída: false }#
 
 #{ Com expressões }#
 idade = 25;
 tem_carteira = true;
 
+#{ Ambas formas são válidas }#
 pode_dirigir = (idade >= 18) and tem_carteira;
 print(pode_dirigir);  #{ Saída: true }#
+
+pode_dirigir_2 = (idade >= 18) && tem_carteira;
+print(pode_dirigir_2);  #{ Saída: true }#
 ```
 
 ---
 
-### OR (`or`)
+### OR (`or` ou `||`)
 
 Retorna `true` se pelo menos um dos operandos for `true`.
 
@@ -384,17 +491,19 @@ Retorna `true` se pelo menos um dos operandos for `true`.
 **Exemplos:**
 
 ```
-#{ Ambos verdadeiros }#
+#{ Forma textual (or) }#
 a = true or true;
 print(a);  #{ Saída: true }#
 
-#{ Um verdadeiro }#
 b = true or false;
 print(b);  #{ Saída: true }#
 
-#{ Ambos falsos }#
-c = false or false;
-print(c);  #{ Saída: false }#
+#{ Forma simbólica (||) }#
+c = false || true;
+print(c);  #{ Saída: true }#
+
+d = false || false;
+print(d);  #{ Saída: false }#
 
 #{ Com expressões }#
 fim_de_semana = false;

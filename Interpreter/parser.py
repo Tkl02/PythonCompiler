@@ -42,13 +42,21 @@ class Parser:
         """
         Analisa e retorna um comando (statement) do código-fonte, como atribuição, if, while ou expressão.
         """
-        if self.current_token.type ==TokenType.BREAK:
-            return self.break_statement()
-        if self.current_token.type == TokenType.IDENTIFIER and self.next_token.type == TokenType.ASSIGN:
-            return self.assignment_statement()
-        elif self.current_token.type == TokenType.WHILE: return self.while_statement()
-        elif self.current_token.type == TokenType.IF: return self.if_statement()
-        else: return self.expr()
+        if self.current_token.type == TokenType.WHILE: return self.while_statement()
+        if self.current_token.type == TokenType.IF: return self.if_statement()
+        if self.current_token.type == TokenType.BREAK: return self.break_statement()
+        if self.current_token.type == TokenType.PRINT: return self.print_statement()
+
+        if self.current_token.type == TokenType.IDENTIFIER:
+            if self.next_token.type == TokenType.ASSIGN:
+                return self.assignment_statement()
+            elif self.next_token.type in (TokenType.PLUS_ASSIGN, TokenType.MINUS_ASSIGN):
+                return self.compound_assignment_statement()
+            elif self.next_token.type == TokenType.PLUS_PLUS:
+                return self.increment_statement()
+        
+        return self.expr()
+        
     
     def if_statement(self):
         """
@@ -100,6 +108,16 @@ class Parser:
         token = self.current_token
         self.eat(TokenType.BREAK)
         return BreakNode(token)
+    
+    def print_statement(self):
+        """
+        Analisa um comando print.
+        """
+        self.eat(TokenType.PRINT)
+        self.eat(TokenType.LPAREN)
+        expr_node = self.expr()
+        self.eat(TokenType.RPAREN)
+        return PrintNode(expr_node)
             
     def compound_statement(self):
         """
@@ -123,7 +141,7 @@ class Parser:
         Analisa uma expressão lógica com operadores 'or'.
         """
         node = self.and_expr()
-        while self.current_token.type == TokenType.OR:
+        while self.current_token.type in (TokenType.OR, TokenType.LOGICAL_OR):
             op_token = self.current_token; self.advance()
             node = BinOpNode(left_node=node, op_token=op_token, right_node=self.and_expr())
         return node
@@ -133,7 +151,7 @@ class Parser:
         Analisa uma expressão lógica com operadores 'and'.
         """
         node = self.comp_expr()
-        while self.current_token.type == TokenType.AND:
+        while self.current_token.type in (TokenType.AND, TokenType.LOGICAL_AND):
             op_token = self.current_token; self.advance()
             node = BinOpNode(left_node=node, op_token=op_token, right_node=self.comp_expr())
         return node
@@ -228,3 +246,17 @@ class Parser:
             if self.current_token.type in [TokenType.IF, TokenType.WHILE, TokenType.PRINT, TokenType.SEMICOLON]:
                 return
             self.advance()
+    
+    def compound_assignment_statement(self):
+        var_token = self.current_token
+        self.eat(TokenType.IDENTIFIER)
+        op_token = self.current_token
+        self.advance()
+        expr = self.expr()
+        return CompoundAssignNode(var_token, expr, op_token)
+    
+    def increment_statement(self):
+        var_token = self.current_token
+        self.eat(TokenType.IDENTIFIER)
+        self.eat(TokenType.PLUS_PLUS)
+        return IncrementNode(var_token)

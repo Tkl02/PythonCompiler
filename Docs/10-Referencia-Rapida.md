@@ -43,6 +43,13 @@ identificador = valor;
 /   # Divisão
 ```
 
+### Atribuição Composta
+```
+++  # Auto-incremento (var = var + 1)
++=  # Adição com atribuição (var = var + valor)
+-=  # Subtração com atribuição (var = var - valor)
+```
+
 ### Comparação
 ```
 ==  # Igual
@@ -55,9 +62,11 @@ identificador = valor;
 
 ### Lógicos
 ```
-and  # E lógico
-or   # OU lógico
+and  # E lógico (também pode usar &&)
+or   # OU lógico (também pode usar ||)
 not  # NÃO lógico
+&&   # E lógico (alternativa a and)
+||   # OU lógico (alternativa a or)
 ```
 
 ### Unários
@@ -77,8 +86,8 @@ not # Negação lógica
 4. `+`, `-`
 5. `<`, `>`, `<=`, `>=`
 6. `==`, `!=`
-7. `and`
-8. `or`
+7. `and`, `&&`
+8. `or`, `||`
 
 ---
 
